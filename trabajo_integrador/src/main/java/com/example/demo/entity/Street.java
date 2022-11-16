@@ -1,12 +1,14 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 @Entity(name="streets")
 public class Street implements Serializable{
 		private static final long serialVersionUID = 1L;
@@ -17,6 +19,6 @@ public class Street implements Serializable{
 		
 	   private String name;
 	   
-	   @ManyToMany (mappedBy= "streets")
-	   private List
+	   @ManyToOne (mappedBy= "streets")
+	   private Set<Address> addreses;
 }

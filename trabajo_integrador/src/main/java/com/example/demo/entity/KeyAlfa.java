@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/*@Entity
+@Entity
 public class KeyAlfa implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -15,6 +15,6 @@ public class KeyAlfa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String key = new String (UUID.randomUUID().toString().toUpperCase().substring(0,40));
+	//private String key = new String (UUID.randomUUID().toString().toUpperCase().substring(0,40));
  
 }

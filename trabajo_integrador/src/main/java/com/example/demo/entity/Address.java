@@ -18,7 +18,7 @@ import javax.persistence.ManyToMany;
 		 @Id
 		 @GeneratedValue(strategy= GenerationType.IDENTITY)
 		 private Long id;
-		 @ManyToMany(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+		 @ManyToMany(cascade=CascadeType.PERSIST,fetch= FetchType.EAGER)
 	     private Set<Street> streets;
 	     
 	     private NumberStreet Number;
