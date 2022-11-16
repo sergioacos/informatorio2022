@@ -3,9 +3,6 @@ package com.example.demo.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.*;
 @Entity(name="floors")
 public class Floor implements Serializable{
@@ -17,6 +14,7 @@ public class Floor implements Serializable{
 	
    private Integer floor;
 	
-	@OneToMany(mappedBy = "departament", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Organization> organizations;
+   @ManyToOne ()
+   @JoinTable(name="adress_id")
+	private List<Address> addresses;
 }
