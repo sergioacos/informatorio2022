@@ -26,7 +26,7 @@ import javax.persistence.OneToMany;
 		 private List<Street> streets;
 		 
 		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	     private List<NumberStreet> Number;
+	     private List<NumberStreet> number;
 		 
 		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	     private List<Departament> departament;

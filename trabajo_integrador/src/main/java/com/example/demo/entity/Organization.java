@@ -27,6 +27,7 @@ public class Organization implements Serializable {
 	 private Integer TelephoneNumber;
 	 
 	 @Column(name="address_organization")
+	 
 	 private Address AddressOrganization;
 	 
 	 @Column(name="email_organization")
@@ -35,8 +36,8 @@ public class Organization implements Serializable {
 	 @Column(name="release_date")
 	 private Date ReleaseDate;
 	 
-	// @Column(name="key_organization")
-	 //private KeyAlfa  key_organization;
+	 @Column(name="key_organization")
+	 private String  key_organization;
 	 
 
 }

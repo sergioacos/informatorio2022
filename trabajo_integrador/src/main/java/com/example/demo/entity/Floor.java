@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+
 @Entity(name="floors")
 public class Floor implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -14,7 +15,6 @@ public class Floor implements Serializable{
 	
    private Integer floor;
 	
-   @ManyToOne ()
-   @JoinTable(name="adress_id")
-	private List<Address> addresses;
+   @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+   	private Address address;
 }
