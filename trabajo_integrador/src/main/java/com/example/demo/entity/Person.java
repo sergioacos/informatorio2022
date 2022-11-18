@@ -38,8 +38,8 @@ public class Person implements Serializable {
 	 @Column(name="release_date")
 	 private Date ReleaseDate;
 	 
-	// @Column(name="key_person")
-	// private KeyAlfa  key_person;
+	 @Column(name="key_person")
+	 private String  key_person;
 	 
 
 }

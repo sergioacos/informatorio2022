@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name="addresses")
@@ -33,5 +34,10 @@ import javax.persistence.OneToMany;
 		 
 		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	     private List<Floor> floor;
-
+		 
+		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+		 private Organization organization;
+		 
+		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+		 private Event event;
 }
