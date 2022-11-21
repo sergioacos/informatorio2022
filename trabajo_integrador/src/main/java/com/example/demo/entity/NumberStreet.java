@@ -24,4 +24,45 @@ public class NumberStreet implements Serializable{
    @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
   // @JoinColumn (name="addres_id")
    private Address address;
+
+public Long getId() {
+	return id;
+}
+
+public void setId(Long id) {
+	this.id = id;
+}
+
+public Integer getNumber() {
+	return number;
+}
+
+public void setNumber(Integer number) {
+	this.number = number;
+}
+
+public Address getAddress() {
+	return address;
+}
+
+public void setAddress(Address address) {
+	this.address = address;
+}
+
+public static long getSerialversionuid() {
+	return serialVersionUID;
+}
+
+public NumberStreet() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public NumberStreet(Integer number, Address address) {
+	super();
+	this.number = number;
+	this.address = address;
+}
+   
+   
 }

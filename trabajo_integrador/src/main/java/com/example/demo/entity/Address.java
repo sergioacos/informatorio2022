@@ -40,4 +40,82 @@ import javax.persistence.OneToMany;
 		 
 		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
 		 private Event event;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public List<Street> getStreets() {
+			return streets;
+		}
+
+		public void setStreets(List<Street> streets) {
+			this.streets = streets;
+		}
+
+		public List<NumberStreet> getNumber() {
+			return number;
+		}
+
+		public void setNumber(List<NumberStreet> number) {
+			this.number = number;
+		}
+
+		public List<Departament> getDepartament() {
+			return departament;
+		}
+
+		public void setDepartament(List<Departament> departament) {
+			this.departament = departament;
+		}
+
+		public List<Floor> getFloor() {
+			return floor;
+		}
+
+		public void setFloor(List<Floor> floor) {
+			this.floor = floor;
+		}
+
+		public Organization getOrganization() {
+			return organization;
+		}
+
+		public void setOrganization(Organization organization) {
+			this.organization = organization;
+		}
+
+		public Event getEvent() {
+			return event;
+		}
+
+		public void setEvent(Event event) {
+			this.event = event;
+		}
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
+
+		public Address() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public Address(List<Street> streets, List<NumberStreet> number, List<Departament> departament,
+				List<Floor> floor, Organization organization, Event event) {
+			super();
+			this.streets = streets;
+			this.number = number;
+			this.departament = departament;
+			this.floor = floor;
+			this.organization = organization;
+			this.event = event;
+		}
+		 
+		 
 }

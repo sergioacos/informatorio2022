@@ -24,4 +24,44 @@ public class Departament implements Serializable{
    @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
    //@JoinTable(name="adress_id")
    private Address address;
+
+public Long getId() {
+	return id;
+}
+
+public void setId(Long id) {
+	this.id = id;
+}
+
+public String getDepartament() {
+	return departament;
+}
+
+public void setDepartament(String departament) {
+	this.departament = departament;
+}
+
+public Address getAddress() {
+	return address;
+}
+
+public void setAddress(Address address) {
+	this.address = address;
+}
+
+public static long getSerialversionuid() {
+	return serialVersionUID;
+}
+
+public Departament() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public Departament(String departament, Address address) {
+	super();
+	this.departament = departament;
+	this.address = address;
+}
+   
 }
