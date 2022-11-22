@@ -128,18 +128,18 @@ public class Organization implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Organization(String nameOrganization, Integer cuitOrganization, Integer telephoneNumber,
+	public Organization(String nameOrganization, Integer cuitOrganization, Integer telephoneNumber/*,
 			List<Address> addressOrganization, String emailOrganization, Date releaseDate, String key_organization,
-			List<Event> events) {
+			List<Event> events*/) {
 		super();
 		NameOrganization = nameOrganization;
 		CuitOrganization = cuitOrganization;
 		TelephoneNumber = telephoneNumber;
-		AddressOrganization = addressOrganization;
+		/*AddressOrganization = addressOrganization;
 		EmailOrganization = emailOrganization;
 		ReleaseDate = releaseDate;
 		this.key_organization = key_organization;
-		this.events = events;
+		this.events = events;*/
 	}
 
 }
