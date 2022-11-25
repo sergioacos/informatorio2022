@@ -142,4 +142,13 @@ public class Organization implements Serializable {
 		this.events = events;*/
 	}
 
+	@Override
+	public String toString() {
+		return "Organization [id=" + id + ", NameOrganization=" + NameOrganization + ", CuitOrganization="
+				+ CuitOrganization + ", TelephoneNumber=" + TelephoneNumber + ", AddressOrganization="
+				+ AddressOrganization + ", EmailOrganization=" + EmailOrganization + ", ReleaseDate=" + ReleaseDate
+				+ ", key_organization=" + key_organization + ", events=" + events + "]";
+	}
+	
+
 }
