@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.OrganDto;
 import com.example.demo.entity.Organization;
 import com.example.demo.repository.IUserRepository;
+import com.example.demo.wrapper.OrganWrapper;
 
 @Service
 public class ServiceImplement implements IOrganService{
@@ -22,18 +24,22 @@ public class ServiceImplement implements IOrganService{
  @Autowired
  private IUserRepository userRepository;
  
- 
- 
-
 
 @Override
 public List<Organization> getAll() {
 	// TODO Auto-generated method stub
-	return null;
+	return userRepository.findAll();
 }
 
 @Override
-public Organization save(Organization organization) {
-	
-	return userRepository.save(organization);
+public OrganDto save(OrganDto organizationDto) {
+	Organization organization = OrganWrapper.dtoToEntity(organizationDto);
+	organizationDto = OrganWrapper.entityToDto(userRepository.save(organization));
+	return organizationDto;
+}
+
+@Override
+public Organization findByNameOrganization(String nameOrganization) {
+	// TODO Auto-generated method stub
+	return null;
 }}

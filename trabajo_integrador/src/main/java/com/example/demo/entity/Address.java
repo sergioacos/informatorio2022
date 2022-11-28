@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,8 +36,11 @@ import javax.persistence.OneToMany;
 		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	     private List<Floor> floor;
 		 
-		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-		 private Organization organization;
+		 @Column(name="address_organization")
+		 @OneToMany(mappedBy="AddressOrganization",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+		 
+		 private List<Organization> organizations;
+		 
 		 
 		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
 		 private Event event;
@@ -81,12 +85,12 @@ import javax.persistence.OneToMany;
 			this.floor = floor;
 		}
 
-		public Organization getOrganization() {
-			return organization;
+		public List<Organization> getOrganizations() {
+			return organizations;
 		}
 
-		public void setOrganization(Organization organization) {
-			this.organization = organization;
+		public void setOrganizations(List<Organization> organizations) {
+			this.organizations = organizations;
 		}
 
 		public Event getEvent() {
@@ -107,15 +111,16 @@ import javax.persistence.OneToMany;
 		}
 
 		public Address(List<Street> streets, List<NumberStreet> number, List<Departament> departament,
-				List<Floor> floor, Organization organization, Event event) {
+				List<Floor> floor, List<Organization> organizations, Event event) {
 			super();
 			this.streets = streets;
 			this.number = number;
 			this.departament = departament;
 			this.floor = floor;
-			this.organization = organization;
+			this.organizations = organizations;
 			this.event = event;
 		}
+
 		 
 		 
 }

@@ -7,6 +7,7 @@ import com.example.demo.entity.Organization;
 
 @Repository
 public interface IUserRepository extends JpaRepository<Organization,Long> {
-	public Organization findByNameOrganization(String NameOrganization);
+	
+	public Organization findByNameOrganization(String nameOrganization);
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.OrganDto;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Departament;
 import com.example.demo.entity.Floor;
@@ -27,6 +28,7 @@ import com.example.demo.service.IOrganService;
 @RestController
 @RequestMapping(value="api/v1/organization")
 public class UserController {
+	
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class UserController {
 	public ResponseEntity<HashMap<String, Object>> id(@PathVariable(value = "organization")Long id){
 		HashMap<String,Object> response= new HashMap<>();
 		if(id==5) {
-			Organization organization= new Organization("carrefour", 20300, 20 /*,new Address(new Street("falsa"),new NumberStreet(123),new Departament(1),new Floor(2)),121,"djkj",new Date(21,10,1984)*/);
+			Organization organization= new Organization();
 			response.put("organization", organization);
 			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
 		}else {
@@ -44,14 +46,22 @@ public class UserController {
 		}
 	}
 		
+	@GetMapping(value="/all")
+	
+	public ResponseEntity<Map<String, Object>>all(){
+		Map<String,Object> response = new HashMap<>();
+		List<Organization> organizations = organservice.getAll();
+		response.put("organizations",organizations);
+		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+	}
 	@PostMapping ("/")
-	public ResponseEntity<Map<String,Object>> newOrganization(@RequestBody Organization organization){
+	public ResponseEntity<Map<String,Object>> newOrganization(@RequestBody OrganDto organizationDto){
 		
-		log.info("organization"+organization.toString());
+		log.info("organization"+ organizationDto.toString());
 		
 		Map<String, Object> response= new HashMap<>();
 		
-		Organization newOrganization= organservice.save(organization);
+		OrganDto newOrganization= organservice.save(organizationDto);
 		
 		response.put("organization", newOrganization);
 		
