@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,7 @@ public class UserController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 	}
 	@PostMapping ("/")
-	public ResponseEntity<Map<String,Object>> newOrganization(@RequestBody OrganDto organizationDto){
+	public ResponseEntity<Map<String,Object>> newOrganization(@Valid @RequestBody OrganDto organizationDto){
 		
 		log.info("organization"+ organizationDto.toString());
 		
