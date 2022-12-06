@@ -53,11 +53,14 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>>all(){
 		Map<String,Object> response = new HashMap<>();
 		List<Organization> organizations = organservice.getAll();
+		if(organizations ==null) {
+			response.put("mensaje","No hay organizaciones cargadas");
+		}
 		response.put("organizations",organizations);
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 	}
 	@PostMapping ("/")
-	public ResponseEntity<Map<String,Object>> newOrganization(@Valid @RequestBody OrganDto organizationDto){
+	public ResponseEntity<Map<String,Object>> newOrganization(@Valid @RequestBody OrganDto organizationDto)throws Exception{
 		
 		log.info("organization"+ organizationDto.toString());
 		
