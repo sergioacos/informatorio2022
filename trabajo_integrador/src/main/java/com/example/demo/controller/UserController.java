@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +37,30 @@ public class UserController {
 	@Autowired
 	private IOrganService organservice;
 	
-	@GetMapping(value="/{organization}")
+	/*@GetMapping(value="/{organization}")
 	public ResponseEntity<HashMap<String, Object>> id(@PathVariable(value = "organization")Long id){
 		HashMap<String,Object> response= new HashMap<>();
-		if(id==5) {
-			Organization organization= new Organization();
+		/*Organization organization= new Organization().;
+		
+		if(organization.==id) {
+			
 			response.put("organization", organization);
+			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
+		}
+	}*/
+		
+	@GetMapping(value="/cuit/{cuit}")
+	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")Integer cuit){
+		HashMap<String,Object> response= new HashMap<>();
+		Organization organization= new Organization();
+		log.info("organization"+ cuit.toString());
+		
+		if(organservice.findByCuitOrganization(cuit)!= null) {
+			
+			response.put("organization", organization);
+			
 			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
@@ -50,15 +69,20 @@ public class UserController {
 		
 	@GetMapping(value="/all")
 	
-	public ResponseEntity<Map<String, Object>>all(){
-		Map<String,Object> response = new HashMap<>();
-		List<Organization> organizations = organservice.getAll();
-		if(organizations ==null) {
-			response.put("mensaje","No hay organizaciones cargadas");
-		}
+	public ResponseEntity<HashMap<String, Object>>all(){
+		HashMap<String,Object> response = new HashMap<>();
+		List<Organization> organizations = organservice.getAll();//new ArrayList<>();
+		
+		//if(organizations.isEmpty()) {
+		// response.put("mensaje","No hay organizaciones cargadas");
+		 
+		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+		//}else {
 		response.put("organizations",organizations);
-		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		return new ResponseEntity<HashMap<String,Object>>(response,HttpStatus.OK);
+		//}
 	}
+	
 	@PostMapping ("/")
 	public ResponseEntity<Map<String,Object>> newOrganization(@Valid @RequestBody OrganDto organizationDto)throws Exception{
 		

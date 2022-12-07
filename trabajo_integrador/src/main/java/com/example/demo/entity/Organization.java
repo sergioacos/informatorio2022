@@ -27,7 +27,7 @@ public class Organization implements Serializable {
 	 private String nameOrganization;
 
 	 @Column(name="cuit_organization")
-	 private Integer CuitOrganization;
+	 private Integer cuitOrganization;
 	 
 	 @Column(name="telephone_number")
 	 private Integer TelephoneNumber;
@@ -65,11 +65,11 @@ public class Organization implements Serializable {
 	}
 
 	public Integer getCuitOrganization() {
-		return CuitOrganization;
+		return cuitOrganization;
 	}
 
 	public void setCuitOrganization(Integer cuitOrganization) {
-		CuitOrganization = cuitOrganization;
+		this.cuitOrganization = cuitOrganization;
 	}
 
 	public Integer getTelephoneNumber() {
@@ -136,7 +136,7 @@ public class Organization implements Serializable {
 		super();
 		this.id = id;
 		this.nameOrganization = nameOrganization;
-		CuitOrganization = cuitOrganization;
+		this.cuitOrganization = cuitOrganization;
 		TelephoneNumber = telephoneNumber;
 		AddressOrganization = addressOrganization;
 		EmailOrganization = emailOrganization;
@@ -148,7 +148,7 @@ public class Organization implements Serializable {
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", nameOrganization=" + nameOrganization + ", CuitOrganization="
-				+ CuitOrganization + ", TelephoneNumber=" + TelephoneNumber + ", AddressOrganization="
+				+ cuitOrganization + ", TelephoneNumber=" + TelephoneNumber + ", AddressOrganization="
 				+ AddressOrganization + ", EmailOrganization=" + EmailOrganization + ", ReleaseDate=" + ReleaseDate
 				+ ", key_organization=" + key_organization + ", events=" + events + "]";
 	}

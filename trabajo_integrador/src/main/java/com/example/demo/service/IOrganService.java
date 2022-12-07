@@ -12,4 +12,7 @@ public interface IOrganService {
  public OrganDto save(OrganDto organizationDto);
  
  public Organization findByNameOrganization(String nameOrganization);
+ 
+ public Organization findByCuitOrganization(Integer cuitOrganization);
+
 }

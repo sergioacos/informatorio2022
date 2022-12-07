@@ -9,5 +9,7 @@ import com.example.demo.entity.Organization;
 public interface IUserRepository extends JpaRepository<Organization,Long> {
 	
 	public Organization findByNameOrganization(String nameOrganization);
+	
+	public Organization findByCuitOrganization(Integer cuitOrganization);
 
 }

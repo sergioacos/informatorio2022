@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class ServiceImplement implements IOrganService{
  @Autowired
  private IUserRepository userRepository;
  
-
+@Transactional
 @Override
 public List<Organization> getAll() {
 	// TODO Auto-generated method stub
@@ -42,4 +43,10 @@ public OrganDto save(OrganDto organizationDto) {
 public Organization findByNameOrganization(String nameOrganization) {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+@Override
+public Organization findByCuitOrganization(Integer cuitOrganization) {
+	// TODO Auto-generated method stub
+	return userRepository.findByCuitOrganization(cuitOrganization);
 }}
