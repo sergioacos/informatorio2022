@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +12,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@ToString
+@Setter
+@NoArgsConstructor
 @Entity (name="Events")
 public class Event implements Serializable {
 	 private static final long serialVersionUID = 1L;
@@ -26,8 +39,8 @@ public class Event implements Serializable {
 	 private String NameEvent;
 
 	 
-	 @Column(name="type")
-	 private Boolean Type;
+	 @Column(name="es_recurrente")
+	 private Boolean esRecurrente;
 	 
 	 
 	 @OneToMany(mappedBy="event",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
@@ -38,139 +51,43 @@ public class Event implements Serializable {
 	 private Boolean activity;
 	 
 	 @Column(name="create_date")
-	 private Date CreateDate;
+	 private LocalDateTime createDate;
 	 
-	 @Column(name="organizations")
-	 @ManyToMany(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	 private List<Organization> organizations;
+	 @Column(name="date_Event")
+	 @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	 private LocalDateTime dateEvent;
+	 
+	// @Column(name="organizations")
+	 @ManyToOne(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+	 @JoinColumn(name="organizations_id")
+	 private Organization organization;
+	 
+	 @Column(name="key_Event")
+	  private String keyEvent;
 	 
 	 @Column(name="turns")
 	 @OneToMany(mappedBy="events",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
      private List<Turn> turns;
 
-	 
-	 
-	public Long getId() {
-		return id;
-	}
+	
 
-
-
-	public void setId(Long id) {
+	public Event(Long id, String nameEvent, Boolean type, List<Address> ubications, Boolean activity,
+			LocalDateTime createDate, LocalDateTime dateEvent, Organization organization, String keyEvent,
+			List<Turn> turns) {
+		super();
 		this.id = id;
-	}
-
-
-
-	public String getNameEvent() {
-		return NameEvent;
-	}
-
-
-
-	public void setNameEvent(String nameEvent) {
 		NameEvent = nameEvent;
-	}
-
-
-
-	public Boolean getType() {
-		return Type;
-	}
-
-
-
-	public void setType(Boolean type) {
-		Type = type;
-	}
-
-
-
-	public List<Address> getUbications() {
-		return ubications;
-	}
-
-
-
-	public void setUbications(List<Address> ubications) {
+		esRecurrente = type;
 		this.ubications = ubications;
-	}
-
-
-
-	public Boolean getActivity() {
-		return activity;
-	}
-
-
-
-	public void setActivity(Boolean activity) {
 		this.activity = activity;
-	}
-
-
-
-	public Date getCreateDate() {
-		return CreateDate;
-	}
-
-
-
-	public void setCreateDate(Date createDate) {
-		CreateDate = createDate;
-	}
-
-
-
-	public List<Organization> getOrganizations() {
-		return organizations;
-	}
-
-
-
-	public void setOrganizations(List<Organization> organizations) {
-		this.organizations = organizations;
-	}
-
-
-
-	public List<Turn> getTurns() {
-		return turns;
-	}
-
-
-
-	public void setTurns(List<Turn> turns) {
+		createDate = createDate;
+		this.dateEvent = dateEvent;
+		this.organization = organization;
+		this.keyEvent = keyEvent;
 		this.turns = turns;
 	}
 
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
-
-	public Event() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-	public Event(Long id, String nameEvent, Boolean type, List<Address> ubications, Boolean activity, Date createDate,
-			List<Organization> organizations, List<Turn> turns) {
-		super();
-		NameEvent = nameEvent;
-		Type = type;
-		this.ubications = ubications;
-		this.activity = activity;
-		CreateDate = createDate;
-		this.organizations = organizations;
-		this.turns = turns;
-	}
-	 
+	
 	 
 	
 }

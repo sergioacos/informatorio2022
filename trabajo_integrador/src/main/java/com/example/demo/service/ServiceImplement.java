@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -35,6 +38,7 @@ public List<Organization> getAll() {
 @Override
 public OrganDto save(OrganDto organizationDto) {
 	Organization organization = OrganWrapper.dtoToEntity(organizationDto);
+	organization.setReleaseDate((LocalDateTime.now()));
 	organizationDto = OrganWrapper.entityToDto(userRepository.save(organization));
 	return organizationDto;
 }

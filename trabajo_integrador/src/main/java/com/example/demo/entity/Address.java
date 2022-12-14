@@ -11,10 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity(name="addresses")
 	public class Address implements Serializable {
@@ -36,10 +38,11 @@ import javax.persistence.OneToMany;
 		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	     private List<Floor> floor;
 		 
-		 @Column(name="address_organization")
-		 @OneToMany(mappedBy="AddressOrganization",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+		 //@Column(name="address_organization")
 		 
-		 private List<Organization> organizations;
+		 @OneToOne(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+		 @JoinColumn(name= "organization")
+		 private Organization organization;
 		 
 		 
 		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
@@ -85,12 +88,12 @@ import javax.persistence.OneToMany;
 			this.floor = floor;
 		}
 
-		public List<Organization> getOrganizations() {
-			return organizations;
+		public Organization getOrganization() {
+			return organization;
 		}
 
-		public void setOrganizations(List<Organization> organizations) {
-			this.organizations = organizations;
+		public void setOrganization(Organization organization) {
+			this.organization = organization;
 		}
 
 		public Event getEvent() {
@@ -111,13 +114,13 @@ import javax.persistence.OneToMany;
 		}
 
 		public Address(List<Street> streets, List<NumberStreet> number, List<Departament> departament,
-				List<Floor> floor, List<Organization> organizations, Event event) {
+				List<Floor> floor, Organization organization, Event event) {
 			super();
 			this.streets = streets;
 			this.number = number;
 			this.departament = departament;
 			this.floor = floor;
-			this.organizations = organizations;
+			this.organization = organization;
 			this.event = event;
 		}
 

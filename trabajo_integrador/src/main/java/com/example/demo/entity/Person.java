@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity (name="Person")
@@ -35,8 +36,8 @@ public class Person implements Serializable {
 	 @Column(name="ubication")
 	 private Address Ubication;
 	 
-	 @Column(name="email_organization")
-	 private String EmailOrganization;
+	 @Column(name="name_organization")
+	 private String nameOrganization;
 	 
 	 @Column(name="release_date")
 	 private Date ReleaseDate;
@@ -44,7 +45,8 @@ public class Person implements Serializable {
 	 @Column(name="key_person",length=30)
 	 private String  key_person;
 	 
-	 @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	 @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	 @JoinColumn(name="turn_id", referencedColumnName = "id")
 		private Turn  turn;
 
 	public Long getId() {
@@ -95,12 +97,12 @@ public class Person implements Serializable {
 		Ubication = ubication;
 	}
 
-	public String getEmailOrganization() {
-		return EmailOrganization;
+	public String getNameOrganization() {
+		return nameOrganization;
 	}
 
-	public void setEmailOrganization(String emailOrganization) {
-		EmailOrganization = emailOrganization;
+	public void setNameOrganization(String nameOrganization) {
+		this.nameOrganization = nameOrganization;
 	}
 
 	public Date getReleaseDate() {
@@ -135,7 +137,19 @@ public class Person implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	public Person(String name, String lastname, Integer dni, Address ubication,
+			String emailOrganization, Date releaseDate, String key_person, Turn turn) {
+		super();
+		Name = name;
+		this.lastname = lastname;
+		this.dni = dni;
+		this.activity = true;
+		Ubication = ubication;
+		nameOrganization = emailOrganization;
+		ReleaseDate = releaseDate;
+		this.key_person = key_person;
+		this.turn = turn;
+	}
 	public Person(String name, String lastname, Integer dni, Boolean activity, Address ubication,
 			String emailOrganization, Date releaseDate, String key_person, Turn turn) {
 		super();
@@ -144,10 +158,17 @@ public class Person implements Serializable {
 		this.dni = dni;
 		this.activity = activity;
 		Ubication = ubication;
-		EmailOrganization = emailOrganization;
+		nameOrganization = emailOrganization;
 		ReleaseDate = releaseDate;
 		this.key_person = key_person;
 		this.turn = turn;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", Name=" + Name + ", lastname=" + lastname + ", dni=" + dni + ", activity="
+				+ activity + ", Ubication=" + Ubication + ", nameOrganization=" + nameOrganization + ", ReleaseDate="
+				+ ReleaseDate + ", key_person=" + key_person + ", turn=" + turn + "]";
 	}
 	 
 	 

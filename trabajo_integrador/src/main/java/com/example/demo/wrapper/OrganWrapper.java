@@ -26,7 +26,7 @@ public class OrganWrapper {
 	 organDto.setReleaseDate(entity.getReleaseDate());
 	 organDto.setAddressOrganization(entity.getAddressOrganization());
 	 organDto.setEvents(entity.getEvents());
-	 entity.setEmailOrganization(entity.getEmailOrganization());
+	 organDto.setEmailOrganization(entity.getEmailOrganization());
 	 
 	  return organDto;
  }

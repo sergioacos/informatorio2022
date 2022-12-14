@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +12,19 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@ToString
+@Setter
+@NoArgsConstructor
 @Entity (name="Turns")
 public class Turn implements Serializable {
 	 private static final long serialVersionUID = 1L;
@@ -31,79 +41,29 @@ public class Turn implements Serializable {
 	 private Boolean activity;
 	 
 	 @Column(name="create_date")
-	 private Date CreateDate;
+	 private LocalDateTime createDate;
 	 
-	 @OneToOne(fetch=FetchType.LAZY)
+	 @OneToOne(mappedBy= "turn")
 	 private Person  person;
 	 
 	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+	 @JoinColumn(name="event_id", nullable=false)
 	 private Event events;
+	 
+	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+	 @JoinColumn(name="organization_id", nullable=false)
+	 private Organization organization;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public Boolean getActivity() {
-		return activity;
-	}
-
-	public void setActivity(Boolean activity) {
-		this.activity = activity;
-	}
-
-	public Date getCreateDate() {
-		return CreateDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		CreateDate = createDate;
-	}
-
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	public Event getEvents() {
-		return events;
-	}
-
-	public void setEvents(Event events) {
-		this.events = events;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public Turn() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Turn(String key, Boolean activity, Date createDate, Person person, Event events) {
+	public Turn(String key, Boolean activity, LocalDateTime createDate, Person person, Event events) {
 		super();
 		this.key = key;
 		this.activity = activity;
-		CreateDate = createDate;
+		this.createDate = createDate;
 		this.person = person;
 		this.events = events;
 	}
+
+	
 	 
 	
 }
