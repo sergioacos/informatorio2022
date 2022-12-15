@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.example.demo.dto.EventDto;
 import com.example.demo.dto.TurnDto;
+import com.example.demo.entity.Event;
+import com.example.demo.entity.Organization;
 import com.example.demo.entity.Turn;
 
 public interface ITurnService {
@@ -14,5 +16,7 @@ public interface ITurnService {
 	public List<TurnDto> activeOrgEventAll();
 	public TurnDto findByCreateDate(LocalDateTime createdate);
 	public TurnDto findByKey(String keyturn);
+	public List<TurnDto> findByEventsAndOrganization(Event event, Organization organization);
 	public Turn findById(Long id);
+	public List<TurnDto> findByOrganization( Organization organization);
 }

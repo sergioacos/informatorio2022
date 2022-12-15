@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.EventDto;
 import com.example.demo.dto.TurnDto;
+import com.example.demo.entity.Event;
+import com.example.demo.entity.Organization;
 import com.example.demo.entity.Turn;
 import com.example.demo.repository.IEventRepository;
 import com.example.demo.repository.IPersonRepository;
@@ -30,9 +32,9 @@ public class TurnServiceImp implements ITurnService{
 	@Override
 	public TurnDto save(TurnDto turnDto) {
 		Turn turn= TurnWrapper.dtoToEntity(turnDto);
-		turn.setKey(RandomStringUtils.random(10));
+		turn.setKey(RandomStringUtils.random(6));
 		while (turnRepository.findByKey(turn.getKey())!= null) {
-		turn.setKey(RandomStringUtils.random(10));}
+		turn.setKey(RandomStringUtils.random(6));}
 		turnDto = TurnWrapper.entityToDto(turnRepository.save(turn));
 		return turnDto;
 		
@@ -85,6 +87,32 @@ public class TurnServiceImp implements ITurnService{
 	public Turn findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<TurnDto> findByEventsAndOrganization(Event event, Organization organization) {
+		List<Turn> turns=turnRepository.findByEventsAndOrganizationAndActivityTrue(event, organization);
+		List<TurnDto>turnsDto= new ArrayList();
+		for (Turn e:turns) {
+		if(e.getActivity()) { TurnDto turnDto=TurnWrapper.entityToDto(e);
+		turnsDto.add(turnDto);
+		return turnsDto;}
+		}
+		return null;
+		
+	}
+
+	@Override
+	public List<TurnDto> findByOrganization(Organization organization) {
+		List<Turn> turns=turnRepository.findByOrganization(organization);
+		List<TurnDto>turnsDto= new ArrayList();
+		for (Turn e:turns) {
+		if(e.getActivity()) { TurnDto turnDto=TurnWrapper.entityToDto(e);
+		turnsDto.add(turnDto);
+		return turnsDto;}
+		}
+		return null;
+		
 	}
 
 	//@Override

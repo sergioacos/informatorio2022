@@ -9,14 +9,14 @@ import com.example.demo.dto.EventDto;
 import com.example.demo.entity.Event;
 import com.example.demo.entity.Organization;
 import com.example.demo.repository.IEventRepository;
-import com.example.demo.repository.IUserRepository;
+import com.example.demo.repository.IOrganRepository;
 import com.example.demo.wrapper.EventWrapper;
 @Service
 public class EventServiceImp implements IEventService {
 	@Autowired
 	private IEventRepository eventRepository;
 	@Autowired
-   private IUserRepository organRepository;
+   private IOrganRepository organRepository;
 	
 	@Override
 	public EventDto save(EventDto eventDto) {

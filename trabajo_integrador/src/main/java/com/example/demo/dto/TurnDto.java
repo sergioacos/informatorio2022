@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Event;
+import com.example.demo.entity.Organization;
 import com.example.demo.entity.Person;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -36,4 +37,6 @@ public class TurnDto {
 	 private Person  person;
 	@NotNull
 	 private Event events;
+    @NotNull
+	private Organization organization;
 }

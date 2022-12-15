@@ -13,6 +13,10 @@ public interface IOrganService {
  
  public Organization findByNameOrganization(String nameOrganization);
  
- public Organization findByCuitOrganization(Integer cuitOrganization);
+ public OrganDto findByCuitOrganization(Integer cuitOrganization);
+ 
+ public Organization findById(Long id);
+
+public void deleteOrgan(Organization deleteorgan);
 
 }

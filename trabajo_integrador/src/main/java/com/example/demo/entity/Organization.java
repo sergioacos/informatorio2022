@@ -43,6 +43,8 @@ public class Organization implements Serializable {
 	 
 	 @Column(name="telephone_number")
 	 private Integer TelephoneNumber;
+	 @Column(name="active")
+	 private Boolean active;
 	 
 	
 	 @OneToOne (mappedBy="organization",fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)

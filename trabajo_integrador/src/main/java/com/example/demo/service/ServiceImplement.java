@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.OrganDto;
 import com.example.demo.entity.Organization;
-import com.example.demo.repository.IUserRepository;
+import com.example.demo.repository.IOrganRepository;
 import com.example.demo.wrapper.OrganWrapper;
 
 @Service
@@ -26,20 +26,20 @@ public class ServiceImplement implements IOrganService{
 		//return 
 	//}
  @Autowired
- private IUserRepository userRepository;
+ private IOrganRepository organRepository;
  
 @Transactional
 @Override
 public List<Organization> getAll() {
 	// TODO Auto-generated method stub
-	return userRepository.findAll();
+	return organRepository.findByActiveTrue();
 }
 
 @Override
 public OrganDto save(OrganDto organizationDto) {
 	Organization organization = OrganWrapper.dtoToEntity(organizationDto);
 	organization.setReleaseDate((LocalDateTime.now()));
-	organizationDto = OrganWrapper.entityToDto(userRepository.save(organization));
+	organizationDto = OrganWrapper.entityToDto(organRepository.save(organization));
 	return organizationDto;
 }
 
@@ -50,7 +50,23 @@ public Organization findByNameOrganization(String nameOrganization) {
 }
 
 @Override
-public Organization findByCuitOrganization(Integer cuitOrganization) {
+public OrganDto findByCuitOrganization(Integer cuitOrganization) {
 	// TODO Auto-generated method stub
-	return userRepository.findByCuitOrganization(cuitOrganization);
+	Organization organ= organRepository.findByCuitOrganization(cuitOrganization);
+	OrganDto organDTo= OrganWrapper.entityToDto(organ);
+	return organDTo;
+}
+
+@Override
+public Organization findById(Long id) {
+	// TODO Auto-generated method stub
+	 Organization organ =organRepository.findById(id).orElse(null);
+	return organ;
+}
+
+@Override
+public void deleteOrgan(Organization deleteorgan) {
+	// TODO Auto-generated method stub
+	deleteorgan.setActive(false);
+	organRepository.save(deleteorgan);
 }}

@@ -40,6 +40,8 @@ public class OrganDto {
 	 private List<Event> events;
 	 @Email(message="Debe ingresar un email valido")
 	 private String EmailOrganization;
+	 @Size(max=30, min=8, message="Debe ingresar una contraseña entre 8 y 30 caracteres")
+	 private String  key_organization;
 	 
 	
 	 

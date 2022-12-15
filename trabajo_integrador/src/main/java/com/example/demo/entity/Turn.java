@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @Entity (name="Turns")
+
 public class Turn implements Serializable {
 	 private static final long serialVersionUID = 1L;
 	 //columnas de la tabla
@@ -47,11 +49,12 @@ public class Turn implements Serializable {
 	 private Person  person;
 	 
 	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-	 @JoinColumn(name="event_id", nullable=false)
+	 @JoinColumn(name="event_id")
 	 private Event events;
 	 
 	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-	 @JoinColumn(name="organization_id", nullable=false)
+	 @JoinColumn(name="organization_id")
+	
 	 private Organization organization;
 
 	public Turn(String key, Boolean activity, LocalDateTime createDate, Person person, Event events) {

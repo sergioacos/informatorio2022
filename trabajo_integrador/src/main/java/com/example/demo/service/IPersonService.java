@@ -14,6 +14,6 @@ public interface IPersonService {
 	  public PersonDto save(PersonDto personDto);
 	  public Person saveperson(Person person);
 	  public void deletePerson(Person persondelete);
-
+	  public List<PersonDto> findByLastname(String lastname);
 	public PersonDto findByDni(Integer dni);
 }

@@ -56,6 +56,21 @@ public class PersonController {
 		 response.put("persons",persons);
 		return new ResponseEntity<HashMap<String,Object>>(response,HttpStatus.OK);
      }
+@GetMapping(value="/lastname/{lastname}")
+public ResponseEntity<HashMap<String, Object>> lastname(@PathVariable(value = "lastname")String lastname){
+	HashMap<String,Object> response= new HashMap<>();
+	List<PersonDto> persons= personService.findByLastname(lastname);
+	//log.info("organization"+ cuit.toString());
+	
+	if(persons.isEmpty()==false) {
+		
+		response.put("persons", persons);
+		
+		return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
+	}else {response.put("persons", "No se encontraron personas con ese apellido");
+		return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
+	}
+}
 
 @PostMapping("/")
     public ResponseEntity<Map<String,Object>> newPerson(@Valid @RequestBody PersonDto persondto )throws Exception{

@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.PersonDto;
+import com.example.demo.dto.TurnDto;
 import com.example.demo.entity.Person;
+import com.example.demo.entity.Turn;
 import com.example.demo.repository.IPersonRepository;
 import com.example.demo.wrapper.PersonWrapper;
+import com.example.demo.wrapper.TurnWrapper;
 
 @Service
 public class PersonServiceImp implements IPersonService {
@@ -72,6 +75,18 @@ public class PersonServiceImp implements IPersonService {
 		// TODO Auto-generated method stub
 		Person person= personRepository.findById(id).orElse(null);
 		return person;
+	}
+
+	@Override
+	public List<PersonDto> findByLastname(String lastname) {
+		List<Person> persons=personRepository.findByLastname(lastname);
+		List<PersonDto>personsDto= new ArrayList();
+		for (Person e:persons) {
+		if(e.getActivity()) { PersonDto personDto=PersonWrapper.entityToDto(e);
+		personsDto.add(personDto);
+		return personsDto;}
+		}
+		return null;
 	}
 
 }
