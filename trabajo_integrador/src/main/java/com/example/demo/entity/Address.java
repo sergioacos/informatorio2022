@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="addresses")
 	public class Address implements Serializable {
 		 private static final long serialVersionUID = 1L;
@@ -39,13 +41,14 @@ import javax.persistence.OneToOne;
 	     private List<Floor> floor;
 		 
 		 //@Column(name="address_organization")
-		 
+		 @JsonIgnore
 		 @OneToOne(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-		 @JoinColumn(name= "organization")
+		 @JoinColumn(name= "organization_id",referencedColumnName="id")
 		 private Organization organization;
 		 
-		 
+		 @JsonIgnore
 		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+		 
 		 private Event event;
 
 		public Long getId() {

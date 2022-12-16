@@ -19,54 +19,57 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @Getter
 @ToString
 @Setter
 @NoArgsConstructor
-@Entity (name="Organization")
+@Entity(name = "Organization")
 public class Organization implements Serializable {
-	 private static final long serialVersionUID = 1L;
-	 //columnas de la tabla
-	 @Id
-	 @GeneratedValue(strategy= GenerationType.IDENTITY)
-	 private Long id;
-	 
-	 @Column(name="name_organization",length=30)
-	 private String nameOrganization;
+	private static final long serialVersionUID = 1L;
+	// columnas de la tabla
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	 @Column(name="cuit_organization")
-	 private Integer cuitOrganization;
-	 
-	 @Column(name="telephone_number")
-	 private Integer TelephoneNumber;
-	 @Column(name="active")
-	 private Boolean active;
-	 
-	
-	 @OneToOne (mappedBy="organization",fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-	 
-	 private Address AddressOrganization;
-	 
-	 @Column(name="email_organization")
-	 private String EmailOrganization;
-	 
-	 @Column(name="release_date")
-	 private LocalDateTime ReleaseDate;
-	 
-	 @Column(name="key_organization",length=30)
-	 private String  key_organization;
-	 
-	 @OneToMany (mappedBy= "organization")
-	 
-	  private List<Event> events;
-	 
-	 @OneToMany (mappedBy= "organization")
-	 
-	  private List<Turn> turns;
+	@Column(name = "name_organization", length = 30)
+	private String nameOrganization;
+
+	@Column(name = "cuit_organization")
+	private Integer cuitOrganization;
+
+	@Column(name = "telephone_number")
+	private Integer TelephoneNumber;
+	@Column(name = "active")
+	private Boolean active;
+
+	@OneToOne(mappedBy = "organization", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    
+	private Address AddressOrganization;
+
+	@Column(name = "email_organization")
+	private String EmailOrganization;
+
+	@Column(name = "release_date")
+	private LocalDateTime ReleaseDate;
+
+	@Column(name = "key_organization", length = 30)
+	private String key_organization;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "organization")
+
+	private List<Event> events;
+
+	@OneToMany(mappedBy = "organization")
+
+	private List<Turn> turns;
 
 	public Organization(String nameOrganization, Integer cuitOrganization, Integer telephoneNumber,
 			Address addressOrganization, String emailOrganization, LocalDateTime releaseDate, String key_organization,
@@ -82,4 +85,3 @@ public class Organization implements Serializable {
 		this.events = events;
 	}
 }
-

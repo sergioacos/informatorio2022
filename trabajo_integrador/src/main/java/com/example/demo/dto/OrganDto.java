@@ -15,6 +15,9 @@ import javax.validation.constraints.Size;
 
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,10 +36,15 @@ public class OrganDto {
 	//@Max(value=30)
 	@Size(max=30, min=3, message="Debe ingresar un nombre entre 3 y 30 caracteres")
 	 private String nameOrganization;
+	@Min(value=4)
+	@Max(value=9999999)
 	@Positive(message="Ingrese un número de cuit válido")
 	 private Integer CuitOrganization;
 	 private LocalDateTime ReleaseDate;
+	 @NotNull
+	 @JsonInclude(Include.NON_NULL)
 	 private Address AddressOrganization;
+	 @JsonIgnore
 	 private List<Event> events;
 	 @Email(message="Debe ingresar un email valido")
 	 private String EmailOrganization;
