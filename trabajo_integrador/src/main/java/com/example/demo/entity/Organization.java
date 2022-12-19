@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,6 +19,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,17 +43,20 @@ public class Organization implements Serializable {
 	private Long id;
 
 	@Column(name = "name_organization", length = 30)
+	
 	private String nameOrganization;
 
-	@Column(name = "cuit_organization")
-	private Integer cuitOrganization;
+	@Column(name = "cuit_organization",unique=true)
+	
+	private BigInteger cuitOrganization;
 
 	@Column(name = "telephone_number")
 	private Integer TelephoneNumber;
 	@Column(name = "active")
 	private Boolean active;
 
-	@OneToOne(mappedBy = "organization", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+	 @JoinColumn(name= "address_id",referencedColumnName="id")
     
 	private Address AddressOrganization;
 
@@ -62,16 +69,15 @@ public class Organization implements Serializable {
 	@Column(name = "key_organization", length = 30)
 	private String key_organization;
 
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "organization")
-
+	//@JsonIgnore
 	private List<Event> events;
 
-	@OneToMany(mappedBy = "organization")
-
+	@OneToMany(mappedBy = "organization",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	private List<Turn> turns;
 
-	public Organization(String nameOrganization, Integer cuitOrganization, Integer telephoneNumber,
+	public Organization(String nameOrganization, BigInteger cuitOrganization, Integer telephoneNumber,
 			Address addressOrganization, String emailOrganization, LocalDateTime releaseDate, String key_organization,
 			List<Event> events) {
 		super();

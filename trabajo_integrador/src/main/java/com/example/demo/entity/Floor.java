@@ -5,6 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@ToString
+@Setter
+@NoArgsConstructor
 @Entity(name="floors")
 public class Floor implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -12,49 +20,17 @@ public class Floor implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@Column(unique=true)
    private Integer floor;
 	
-   @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-   	private Address address;
+   @OneToMany(mappedBy="floor",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+   	private List <Address> addresses;
 
-public Long getId() {
-	return id;
-}
 
-public void setId(Long id) {
-	this.id = id;
-}
-
-public Integer getFloor() {
-	return floor;
-}
-
-public void setFloor(Integer floor) {
-	this.floor = floor;
-}
-
-public Address getAddress() {
-	return address;
-}
-
-public void setAddress(Address address) {
-	this.address = address;
-}
-
-public static long getSerialversionuid() {
-	return serialVersionUID;
-}
-
-public Floor() {
-	super();
-	// TODO Auto-generated constructor stub
-}
-
-public Floor(Integer floor, Address address) {
+public Floor(Integer floor, List<Address> addresses) {
 	super();
 	this.floor = floor;
-	this.address = address;
+	this.addresses = addresses;
 }
    
    

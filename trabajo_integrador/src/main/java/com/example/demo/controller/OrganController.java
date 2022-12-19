@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class OrganController {
 	}*/
 		
 	@GetMapping(value="/cuit/{cuit}")
-	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")Integer cuit){
+	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")BigInteger cuit){
 		HashMap<String,Object> response= new HashMap<>();
 		Organization organization= new Organization();
 		log.info("organization"+ cuit.toString());

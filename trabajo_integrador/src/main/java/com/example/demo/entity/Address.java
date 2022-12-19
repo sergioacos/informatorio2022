@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -18,8 +19,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@ToString
+@Setter
+@NoArgsConstructor
 @Entity(name="addresses")
 	public class Address implements Serializable {
 		 private static final long serialVersionUID = 1L;
@@ -28,98 +38,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		 @GeneratedValue(strategy= GenerationType.IDENTITY)
 		 private Long id;
 		 
-		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-		 private List<Street> streets;
+		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+		 private Street street;
 		 
-		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	     private List<NumberStreet> number;
+		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+	     private NumberStreet number;
 		 
-		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	     private List<Departament> departament;
+		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+	     private Departament departament;
 		 
-		 @OneToMany(mappedBy="address",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	     private List<Floor> floor;
+		 
+		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+	     private Floor floor;
 		 
 		 //@Column(name="address_organization")
-		 @JsonIgnore
-		 @OneToOne(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-		 @JoinColumn(name= "organization_id",referencedColumnName="id")
+		 //@JsonIgnore
+		 @OneToOne(mappedBy = "AddressOrganization", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+		 
 		 private Organization organization;
 		 
-		 @JsonIgnore
+		 //@JsonIgnore
 		 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
 		 
 		 private Event event;
 
-		public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-		public List<Street> getStreets() {
-			return streets;
-		}
-
-		public void setStreets(List<Street> streets) {
-			this.streets = streets;
-		}
-
-		public List<NumberStreet> getNumber() {
-			return number;
-		}
-
-		public void setNumber(List<NumberStreet> number) {
-			this.number = number;
-		}
-
-		public List<Departament> getDepartament() {
-			return departament;
-		}
-
-		public void setDepartament(List<Departament> departament) {
-			this.departament = departament;
-		}
-
-		public List<Floor> getFloor() {
-			return floor;
-		}
-
-		public void setFloor(List<Floor> floor) {
-			this.floor = floor;
-		}
-
-		public Organization getOrganization() {
-			return organization;
-		}
-
-		public void setOrganization(Organization organization) {
-			this.organization = organization;
-		}
-
-		public Event getEvent() {
-			return event;
-		}
-
-		public void setEvent(Event event) {
-			this.event = event;
-		}
-
-		public static long getSerialversionuid() {
-			return serialVersionUID;
-		}
-
-		public Address() {
+		public Address(Street street, NumberStreet number, Departament departament, Floor floor,
+				Organization organization, Event event) {
 			super();
-			// TODO Auto-generated constructor stub
-		}
-
-		public Address(List<Street> streets, List<NumberStreet> number, List<Departament> departament,
-				List<Floor> floor, Organization organization, Event event) {
-			super();
-			this.streets = streets;
+			this.street = street;
 			this.number = number;
 			this.departament = departament;
 			this.floor = floor;
@@ -127,6 +73,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			this.event = event;
 		}
 
+	
+		 
+
+	
 		 
 		 
 }

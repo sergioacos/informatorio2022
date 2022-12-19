@@ -27,64 +27,67 @@ import com.example.demo.service.IOrganService;
 import com.example.demo.wrapper.EventWrapper;
 
 @RestController
-@RequestMapping(value="api/v1/event")
+@RequestMapping(value = "api/v1/event")
 public class EventController {
-	private static  final Logger log = LoggerFactory.getLogger(PersonController.class);
-	 @Autowired
-	 private IEventService eventService;
-	 @Autowired
-	 private IOrganService organservice;
-	 
-	 @PostMapping("/")
-	    public ResponseEntity<Map<String,Object>> newEvent(@Valid @RequestBody EventDto eventdto )throws Exception{
-		log.info("event"+eventdto.toString());
-		Map<String,Object> response= new HashMap<>();
-		EventDto newEvent= eventService.save(eventdto);
+	private static final Logger log = LoggerFactory.getLogger(PersonController.class);
+	@Autowired
+	private IEventService eventService;
+	@Autowired
+	private IOrganService organservice;
+
+	@PostMapping("/")
+	public ResponseEntity<Map<String, Object>> newEvent(@Valid @RequestBody EventDto eventdto) throws Exception {
+		log.info("event" + eventdto.toString());
+		Map<String, Object> response = new HashMap<>();
+		
+		Organization orga=organservice.findById(eventdto.getOrganization().getId());
+		eventdto.setOrganization(orga);
+		EventDto newEvent = eventService.save(eventdto);
 		response.put("event", newEvent);
-		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
-	    }
-	 //Rever!!!
-	 @PutMapping("/")
-	 public ResponseEntity<Map<String, Object>> update(@RequestBody EventDto eventDto){
-	 	log.info("event: "+ eventDto.toString());
-	 	Map<String, Object> response = new HashMap<>();
-	 	Organization organ=eventDto.getOrganization();
-	 			
-	 	if(eventDto == null) {
-	 		response.put("mensaje", "No se pudo actualizar la informacion del evento.");
-	 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
-	 	}
-	 	 if(organ.getKey_organization().equals(eventDto.getKeyEvent())) {
-	 	 EventDto updateEvent = eventService.update(eventDto);
-	 	 response.put("person", updateEvent+"ha sido actualizada");
-	 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-	 	
-	 	
-	 	
-	 	}response.put("mensaje", "Los datos ingresados no son correctos.");
-	 	return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
-        }
-	 // rever!!!!
-	 @DeleteMapping(value="/delete")
-	 public ResponseEntity<Map<String, Object>> deleteEvent(@RequestBody EventDto eventDto){
-		 	log.info("event: "+ eventDto.toString());
-		 	Map<String, Object> response = new HashMap<>();
-		 	Organization organ=eventDto.getOrganization();
-		 			
-		 	if(eventDto == null) {
-		 		response.put("mensaje", "No se pudo actualizar la informacion del evento.");
-		 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
-		 	}
-		 	 if(organ.getKey_organization().equals(eventDto.getKeyEvent())) {
-		 		Event event=EventWrapper.dtoToEntity(eventDto);
-		 	/* Event updateEvent =*/ eventService.delete(event);
-		 	 response.put("person", event+"ha sido eliminada");
-		 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-		 	
-		 	
-		 	
-		 	}response.put("mensaje", "Los datos ingresados no son correctos.");
-		 	return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
-	        }
-	 
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+	}
+
+	// Rever!!!
+	@PutMapping("/")
+	public ResponseEntity<Map<String, Object>> update(@RequestBody EventDto eventDto) {
+		log.info("event: " + eventDto.toString());
+		Map<String, Object> response = new HashMap<>();
+		Organization organ = eventDto.getOrganization();
+
+		if (eventDto == null) {
+			response.put("mensaje", "No se pudo actualizar la informacion del evento.");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		if (organ.getKey_organization().equals(eventDto.getKeyEvent())) {
+			EventDto updateEvent = eventService.update(eventDto);
+			response.put("person", updateEvent + "ha sido actualizada");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+		}
+		response.put("mensaje", "Los datos ingresados no son correctos.");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+	}
+
+	// rever!!!!
+	@DeleteMapping(value = "/delete")
+	public ResponseEntity<Map<String, Object>> deleteEvent(@RequestBody EventDto eventDto) {
+		log.info("event: " + eventDto.toString());
+		Map<String, Object> response = new HashMap<>();
+		Organization organ = eventDto.getOrganization();
+
+		if (eventDto == null) {
+			response.put("mensaje", "No se pudo actualizar la informacion del evento.");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		if (organ.getKey_organization().equals(eventDto.getKeyEvent())) {
+			Event event = EventWrapper.dtoToEntity(eventDto);
+			/* Event updateEvent = */ eventService.delete(event);
+			response.put("person", event + "ha sido eliminada");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+		}
+		response.put("mensaje", "Los datos ingresados no son correctos.");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+	}
+
 }

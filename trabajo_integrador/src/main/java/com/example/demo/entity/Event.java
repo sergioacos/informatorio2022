@@ -57,9 +57,9 @@ public class Event implements Serializable {
 	 @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	 private LocalDateTime dateEvent;
 	 
-	// @Column(name="organizations")
+	
 	 @ManyToOne(cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	 @JoinColumn(name="organizations_id")
+	 @JoinColumn(name="organization_id", referencedColumnName="id")
 	 private Organization organization;
 	 
 	 @Column(name="key_Event")
@@ -80,7 +80,7 @@ public class Event implements Serializable {
 		esRecurrente = type;
 		this.ubications = ubications;
 		this.activity = activity;
-		createDate = createDate;
+		this.createDate = createDate;
 		this.dateEvent = dateEvent;
 		this.organization = organization;
 		this.keyEvent = keyEvent;

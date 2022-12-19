@@ -1,8 +1,10 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@ToString
+@Setter
+@NoArgsConstructor
 @Entity(name="departaments")
 public class Departament implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -19,49 +30,19 @@ public class Departament implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
    private String departament;
    
-   @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+   @OneToMany(mappedBy="departament",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+   
    //@JoinTable(name="adress_id")
-   private Address address;
+   private List<Address> addresses;
 
-public Long getId() {
-	return id;
-}
 
-public void setId(Long id) {
-	this.id = id;
-}
-
-public String getDepartament() {
-	return departament;
-}
-
-public void setDepartament(String departament) {
-	this.departament = departament;
-}
-
-public Address getAddress() {
-	return address;
-}
-
-public void setAddress(Address address) {
-	this.address = address;
-}
-
-public static long getSerialversionuid() {
-	return serialVersionUID;
-}
-
-public Departament() {
-	super();
-	// TODO Auto-generated constructor stub
-}
-
-public Departament(String departament, Address address) {
+public Departament(String departament, List <Address> addresses) {
 	super();
 	this.departament = departament;
-	this.address = address;
+	this.addresses = addresses;
 }
    
 }

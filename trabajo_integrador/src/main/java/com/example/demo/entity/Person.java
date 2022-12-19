@@ -12,7 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Entity (name="Person")
 public class Person implements Serializable {
 	 private static final long serialVersionUID = 1L;
@@ -22,12 +33,16 @@ public class Person implements Serializable {
 	 private Long id;
 	 
 	 @Column(name="name",length=30)
+	 @NotBlank(message="El campo no debe estar en vacio")
 	 private String Name;
 	 
 	 @Column(name="lastname",length=30)
+	 @NotBlank(message="El campo no debe estar en vacio")
 	 private String lastname;
 
-	 @Column(name="dni")
+	 @Column(name="dni", unique=true)
+	 @Min(value=7)
+	 @Max(value=8)
 	 private Integer dni;
 	 
 	 @Column(name="active")
@@ -37,106 +52,22 @@ public class Person implements Serializable {
 	 private Address Ubication;
 	 
 	 @Column(name="name_organization")
+	 
 	 private String nameOrganization;
 	 
 	 @Column(name="release_date")
 	 private Date ReleaseDate;
 	 
 	 @Column(name="key_person",length=30)
+	 @NotBlank(message="El campo no debe estar en blanco")
 	 private String  key_person;
 	 
 	 @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	 @JoinColumn(name="turn_id", referencedColumnName = "id")
 		private Turn  turn;
 
-	public Long getId() {
-		return id;
-	}
+	
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return Name;
-	}
-
-	public void setName(String name) {
-		Name = name;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public Integer getDni() {
-		return dni;
-	}
-
-	public void setDni(Integer dni) {
-		this.dni = dni;
-	}
-
-	public Boolean getActivity() {
-		return activity;
-	}
-
-	public void setActivity(Boolean activity) {
-		this.activity = activity;
-	}
-
-	public Address getUbication() {
-		return Ubication;
-	}
-
-	public void setUbication(Address ubication) {
-		Ubication = ubication;
-	}
-
-	public String getNameOrganization() {
-		return nameOrganization;
-	}
-
-	public void setNameOrganization(String nameOrganization) {
-		this.nameOrganization = nameOrganization;
-	}
-
-	public Date getReleaseDate() {
-		return ReleaseDate;
-	}
-
-	public void setReleaseDate(Date releaseDate) {
-		ReleaseDate = releaseDate;
-	}
-
-	public String getKey_person() {
-		return key_person;
-	}
-
-	public void setKey_person(String key_person) {
-		this.key_person = key_person;
-	}
-
-	public Turn getTurn() {
-		return turn;
-	}
-
-	public void setTurn(Turn turn) {
-		this.turn = turn;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public Person() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	public Person(String name, String lastname, Integer dni, Address ubication,
 			String emailOrganization, Date releaseDate, String key_person, Turn turn) {
 		super();
@@ -164,12 +95,7 @@ public class Person implements Serializable {
 		this.turn = turn;
 	}
 
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", Name=" + Name + ", lastname=" + lastname + ", dni=" + dni + ", activity="
-				+ activity + ", Ubication=" + Ubication + ", nameOrganization=" + nameOrganization + ", ReleaseDate="
-				+ ReleaseDate + ", key_person=" + key_person + ", turn=" + turn + "]";
-	}
+	
 	 
 	 
 	 

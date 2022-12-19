@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ public interface IOrganRepository extends JpaRepository<Organization,Long> {
 	
 	public Organization findByNameOrganization(String nameOrganization);
 	
-	public Organization findByCuitOrganization(Integer cuitOrganization);
+	public Organization findByCuitOrganization(BigInteger cuitOrganization);
 	
 	public List<Organization> findByActiveTrue();
 

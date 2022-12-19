@@ -52,9 +52,7 @@ public class TurnController {
 		log.info("imprimo"+ turnDto.toString());
 		Event event=eventService.findById(turnDto.getEvents().getId());
 		Organization orga=organservice.findById(turnDto.getOrganization().getId());
-		//log.info("imprimo"+ orga.toString());
-		//Long id=turnDto.getOrganization().getId();
-		//log.info("id"+ id.toString());
+		
 		    turnDto.setEvents(event);
 		    turnDto.setOrganization(orga);
 		if (event.getEsRecurrente()) {
@@ -70,7 +68,7 @@ public class TurnController {
 		TurnDto newTurn= turnService.save(turnDto);
 		response.put("turn", newTurn);
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
-		    //return null;
+		    
 	
 	}
 	@GetMapping(value="/organization/{id}")

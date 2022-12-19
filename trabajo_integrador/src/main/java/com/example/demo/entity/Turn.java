@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Future;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,18 +44,18 @@ public class Turn implements Serializable {
 	 private Boolean activity;
 	 
 	 @Column(name="create_date")
+	 @Future(message= "La fecha no puede ser posterior")
 	 private LocalDateTime createDate;
 	 
 	 @OneToOne(mappedBy= "turn")
 	 private Person  person;
 	 
-	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-	 @JoinColumn(name="event_id")
+	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.ALL)
+	 @JoinColumn(name="event_id",referencedColumnName = "id" )
 	 private Event events;
 	 
 	 @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
-	 @JoinColumn(name="organization_id")
-	
+	 @JoinColumn(name="organization_id", referencedColumnName = "id" )
 	 private Organization organization;
 
 	public Turn(String key, Boolean activity, LocalDateTime createDate, Person person, Event events) {

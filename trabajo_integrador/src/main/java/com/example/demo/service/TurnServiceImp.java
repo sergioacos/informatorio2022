@@ -32,9 +32,9 @@ public class TurnServiceImp implements ITurnService{
 	@Override
 	public TurnDto save(TurnDto turnDto) {
 		Turn turn= TurnWrapper.dtoToEntity(turnDto);
-		turn.setKey(RandomStringUtils.random(6));
+		turn.setKey(RandomStringUtils.randomAlphabetic(10));
 		while (turnRepository.findByKey(turn.getKey())!= null) {
-		turn.setKey(RandomStringUtils.random(6));}
+		turn.setKey(RandomStringUtils.randomAlphabetic(10));}
 		turnDto = TurnWrapper.entityToDto(turnRepository.save(turn));
 		return turnDto;
 		

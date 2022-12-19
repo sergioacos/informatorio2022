@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.OrganDto;
+import com.example.demo.entity.Address;
 import com.example.demo.entity.Organization;
+import com.example.demo.repository.IAddressRepository;
 import com.example.demo.repository.IOrganRepository;
 import com.example.demo.wrapper.OrganWrapper;
 
@@ -28,6 +31,9 @@ public class ServiceImplement implements IOrganService{
  @Autowired
  private IOrganRepository organRepository;
  
+ @Autowired
+ private IAddressRepository addressRepository;
+ 
 @Transactional
 @Override
 public List<Organization> getAll() {
@@ -39,7 +45,12 @@ public List<Organization> getAll() {
 public OrganDto save(OrganDto organizationDto) {
 	Organization organization = OrganWrapper.dtoToEntity(organizationDto);
 	organization.setReleaseDate((LocalDateTime.now()));
+	organization.setActive(true);
+	
 	organizationDto = OrganWrapper.entityToDto(organRepository.save(organization));
+	Address address=organization.getAddressOrganization();
+	address.setOrganization(organization);
+	addressRepository.save(address);
 	return organizationDto;
 }
 
@@ -50,7 +61,7 @@ public Organization findByNameOrganization(String nameOrganization) {
 }
 
 @Override
-public OrganDto findByCuitOrganization(Integer cuitOrganization) {
+public OrganDto findByCuitOrganization(BigInteger cuitOrganization) {
 	// TODO Auto-generated method stub
 	Organization organ= organRepository.findByCuitOrganization(cuitOrganization);
 	OrganDto organDTo= OrganWrapper.entityToDto(organ);
@@ -69,4 +80,7 @@ public void deleteOrgan(Organization deleteorgan) {
 	// TODO Auto-generated method stub
 	deleteorgan.setActive(false);
 	organRepository.save(deleteorgan);
-}}
+}
+
+
+}

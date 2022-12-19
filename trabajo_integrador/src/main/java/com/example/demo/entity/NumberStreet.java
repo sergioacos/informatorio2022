@@ -1,8 +1,10 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@ToString
+@Setter
+@NoArgsConstructor
 @Entity(name="numbers_street")
 public class NumberStreet implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -18,50 +30,19 @@ public class NumberStreet implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@Column(unique=true)
    private Integer number;
    
-   @ManyToOne (fetch= FetchType.LAZY, cascade=CascadeType.PERSIST)
+   @OneToMany(mappedBy="number",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
   // @JoinColumn (name="addres_id")
-   private Address address;
+   private List <Address> addresses;
 
-public Long getId() {
-	return id;
-}
 
-public void setId(Long id) {
-	this.id = id;
-}
 
-public Integer getNumber() {
-	return number;
-}
-
-public void setNumber(Integer number) {
-	this.number = number;
-}
-
-public Address getAddress() {
-	return address;
-}
-
-public void setAddress(Address address) {
-	this.address = address;
-}
-
-public static long getSerialversionuid() {
-	return serialVersionUID;
-}
-
-public NumberStreet() {
-	super();
-	// TODO Auto-generated constructor stub
-}
-
-public NumberStreet(Integer number, Address address) {
+public NumberStreet(Integer number, List<Address> addresses) {
 	super();
 	this.number = number;
-	this.address = address;
+	this.addresses = addresses;
 }
    
    

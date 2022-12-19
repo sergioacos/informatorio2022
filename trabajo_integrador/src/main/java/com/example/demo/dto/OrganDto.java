@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -34,12 +36,17 @@ public class OrganDto {
 	@NotEmpty
 	//@Min(value=4)
 	//@Max(value=30)
+	@NotBlank(message="El campo no debe estar en vacio")
 	@Size(max=30, min=3, message="Debe ingresar un nombre entre 3 y 30 caracteres")
 	 private String nameOrganization;
-	@Min(value=4)
-	@Max(value=9999999)
-	@Positive(message="Ingrese un número de cuit válido")
-	 private Integer CuitOrganization;
+	
+	
+	@Min(value=999999999)
+	
+	 private BigInteger CuitOrganization;
+	
+	private Integer TelephoneNumber;
+	
 	 private LocalDateTime ReleaseDate;
 	 @NotNull
 	 @JsonInclude(Include.NON_NULL)
@@ -48,6 +55,7 @@ public class OrganDto {
 	 private List<Event> events;
 	 @Email(message="Debe ingresar un email valido")
 	 private String EmailOrganization;
+	 @NotNull
 	 @Size(max=30, min=8, message="Debe ingresar una contraseña entre 8 y 30 caracteres")
 	 private String  key_organization;
 	 
