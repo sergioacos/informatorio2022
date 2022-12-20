@@ -1,5 +1,7 @@
 package com.example.demo.controlleradvice;
+import java.security.KeyException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,9 +17,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
+import org.springframework.web.client.HttpClientErrorException.Forbidden;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -30,7 +33,7 @@ public class CustomRestControllerAdvice extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		Map<String, Object> body = new LinkedHashMap();
-		body.put("timestamp", new Date());
+		body.put("timestamp", LocalDateTime.now());
 		body.put("status", status.value());
 
 		// Get all errors
@@ -41,22 +44,23 @@ public class CustomRestControllerAdvice extends ResponseEntityExceptionHandler {
 	}	
 	
 	
-	@ExceptionHandler(ArithmeticException.class)
-	public ResponseEntity<Object> handleArithmeticException(ArithmeticException ex) {
+	@ExceptionHandler(KeyException.class)
+	public ResponseEntity<Object> handleBadRequestException(KeyException ex) {
 		log.info("capturando");
 		Map<String, Object> body = new HashMap<>();
-		body.put("timestamp", new Date());
-		body.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
-		body.put("errors", ex.getMessage());
+		body.put("timestamp", LocalDateTime.now());
+		body.put("statusMessage", HttpStatus.FORBIDDEN);
+		body.put("statusCode", HttpStatus.FORBIDDEN.value());
+		body.put("errors", "Verifique los datos ingresados");
 		
-		return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
 	}
 	
 	
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<Object> handleNotFoundException (NotFoundException ex) {
 		Map<String, Object> body = new HashMap<>();
-		body.put("timestamp", new Date());
+		body.put("timestamp",  LocalDateTime.now());
 		body.put("statusMessage", HttpStatus.NOT_FOUND);
 		body.put("statusCode", HttpStatus.NOT_FOUND.value());
 		body.put("errors", "El recurso no fue encontrado");
@@ -64,19 +68,9 @@ public class CustomRestControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
 	}
 
-	//CommandAcceptanceException
 	
-	@ExceptionHandler(CommandAcceptanceException.class)
-	public ResponseEntity<Object> handleCommandAcceptanceException (CommandAcceptanceException ex) {
-		Map<String, Object> body = new HashMap<>();
-		body.put("timestamp", new Date());
-		body.put("statusMessage", HttpStatus.INTERNAL_SERVER_ERROR);
-		body.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
-		body.put("errors", ex.getMessage());
-
-		return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 
 
-}
+

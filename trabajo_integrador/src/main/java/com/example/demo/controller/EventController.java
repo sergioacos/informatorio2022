@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.security.KeyException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.EventDto;
+import com.example.demo.dto.OrganDto;
 import com.example.demo.dto.PersonDto;
 import com.example.demo.entity.Event;
 import com.example.demo.entity.Organization;
@@ -39,7 +42,6 @@ public class EventController {
 	public ResponseEntity<Map<String, Object>> newEvent(@Valid @RequestBody EventDto eventdto) throws Exception {
 		log.info("event" + eventdto.toString());
 		Map<String, Object> response = new HashMap<>();
-		
 		Organization orga=organservice.findById(eventdto.getOrganization().getId());
 		eventdto.setOrganization(orga);
 		EventDto newEvent = eventService.save(eventdto);
@@ -49,45 +51,39 @@ public class EventController {
 
 	
 	@PutMapping("/")
-	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody EventDto eventDto) {
+	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody EventDto eventDto)throws Exception {
 		log.info("event: " + eventDto.toString());
 		Map<String, Object> response = new HashMap<>();
-		Organization organ = eventDto.getOrganization();
-
-		//if (eventDto == null) {
-			//response.put("mensaje", "No se pudo actualizar la informacion del evento.");
-			//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		//}
+		OrganDto organ = organservice.findByCuitOrganization (eventDto.getOrganization().getCuitOrganization());
 		if (organ.getKey_organization().equals(eventDto.getKeyEvent())) {
 			EventDto updateEvent = eventService.update(eventDto);
 			response.put("person", updateEvent + "ha sido actualizada");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
-		}
-		response.put("mensaje", "Los datos ingresados no son correctos.");
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}throw new KeyException();
+		//response.put("mensaje", "Los datos ingresados no son correctos.");
+		//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 	}
 
-	// rever!!!!
+	
 	@DeleteMapping(value = "/delete")
-	public ResponseEntity<Map<String, Object>> deleteEvent(@Valid @RequestBody EventDto eventDto) {
+	public ResponseEntity<Map<String, Object>> deleteEvent(@Valid @RequestBody EventDto eventDto)throws Exception {
 		log.info("event: " + eventDto.toString());
 		Map<String, Object> response = new HashMap<>();
-		Organization organ = eventDto.getOrganization();
+		OrganDto organ = organservice.findByCuitOrganization (eventDto.getOrganization().getCuitOrganization());
 
-		/*if (eventDto == null) {
-			response.put("mensaje", "No se pudo actualizar la informacion del evento.");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}*/
 		if (organ.getKey_organization().equals(eventDto.getKeyEvent())) {
 			Event event = EventWrapper.dtoToEntity(eventDto);
-			/* Event updateEvent = */ eventService.delete(event);
-			response.put("person", event + "ha sido eliminada");
+			eventService.delete(event);
+			response.put("message","El evento".concat(event.getNameEvent()).concat("ha sido eliminado") );
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
-		}
-		response.put("mensaje", "Los datos ingresados no son correctos.");
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-	}
+		}throw new KeyException();
+		//response.put("mensaje", "Los datos ingresados no son correctos.");
+		//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+	
+		//response.put("mensaje", "No se pudo actualizar la informacion del evento.");
+	//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+}
 
 }

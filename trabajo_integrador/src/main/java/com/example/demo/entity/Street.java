@@ -33,7 +33,15 @@ public class Street implements Serializable{
 		//@Column(unique=true)
 	   private String name;
 	   
-	   @OneToMany(mappedBy="street",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+		public Street(String name) {
+			super();
+			this.name = name;
+		}
+	   
+	   
+	   
+	   
+	 /*  @OneToMany(mappedBy="street",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	  // @JoinColumn (name="addres_id")
 	   private List <Address> addresses;
 
@@ -41,7 +49,7 @@ public class Street implements Serializable{
 		super();
 		this.name = name;
 		this.addresses = addresses;
-	}
+	}*/
 
 
 	

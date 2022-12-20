@@ -33,17 +33,22 @@ public class NumberStreet implements Serializable{
 	//@Column(unique=true)
    private Integer number;
    
-   @OneToMany(mappedBy="number",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+	public NumberStreet(Integer number) {
+		super();
+		this.number = number;
+	}
+   
+  /* @OneToMany(mappedBy="number",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
   // @JoinColumn (name="addres_id")
-   private List <Address> addresses;
+   private List <Address> addresses;*/
 
 
 
-public NumberStreet(Integer number, List<Address> addresses) {
+/*public NumberStreet(Integer number, List<Address> addresses) {
 	super();
 	this.number = number;
 	this.addresses = addresses;
-}
+}*/
    
    
 }

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,46 +25,38 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @Getter
 @ToString
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventDto { 
+public class EventDto {
 	@NotNull
 	@NotEmpty
-	@Size(max=30, min=4, message="Debe ingresar un nombre entre 4 y 30 caracteres")
-    private String NameEvent;
-
+	@Size(max = 30, min = 4, message = "Debe ingresar un nombre entre 4 y 30 caracteres")
+	private String NameEvent;
 
 	@NotNull
-	//@NotEmpty
-     private Boolean esRecurrente;
+	private Boolean esRecurrente;
 
-	//@NotNull
-	//@NotEmpty
-	//@Size(min=1, message="Debe ingresar una ubicacion ")
-    private List<Address> ubications;
+	@Size(min = 1, message = "Debe ingresar una ubicacion ")
+	private List<Address> ubications;
 
+	private Boolean activity;
 
-   private Boolean activity;
-   
-  // @NotNull
-	@NotEmpty
-	@Size(max=40,min=20, message="Debe ingresar una contraseseña correcta ")
-   private String keyEvent;
-  
-   private LocalDateTime CreateDate;
-   
-   @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-   private LocalDateTime dateEvent;
-   
-   @NotNull
-   //@NotEmpty
-   private Organization organization;
+	@NotBlank(message = "Elcampo no puede estar en blanco")
+	@Size(max = 40, min = 20, message = "Debe ingresar una contraseseña correcta ")
+	private String keyEvent;
 
-   //@NotNull
-  // @NotEmpty
-   private List<Turn> turns;
+	private LocalDateTime CreateDate;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime dateEvent;
+
+	@NotNull
+	private Organization organization;
+
+	private List<Turn> turns;
 
 }

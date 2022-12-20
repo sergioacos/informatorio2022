@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.math.BigInteger;
+import java.security.KeyException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,7 +59,7 @@ public class OrganController {
 	}*/
 		
 	@GetMapping(value="/cuit/{cuit}")
-	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")BigInteger cuit){
+	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")BigInteger cuit)throws NotFoundException{
 		HashMap<String,Object> response= new HashMap<>();
 		Organization organization= new Organization();
 		log.info("organization"+ cuit.toString());
@@ -68,7 +70,8 @@ public class OrganController {
 			
 			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
+			throw new NotFoundException();
+			//return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
 		}
 	}
 		
@@ -78,14 +81,14 @@ public class OrganController {
 		HashMap<String,Object> response = new HashMap<>();
 		List<OrganDto> organizations = organservice.getAll();//new ArrayList<>();
 		
-		//if(organizations.isEmpty()) {
-		// response.put("mensaje","No hay organizaciones cargadas");
+		if(organizations.isEmpty()) {
+		 response.put("mensaje","No hay organizaciones cargadas");
 		 
-		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
-		//}else {
+		return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
+		}else {
 		response.put("organizations",organizations);
 		return new ResponseEntity<HashMap<String,Object>>(response,HttpStatus.OK);
-		//}
+		}
 	}
 	
 	@PostMapping ("/")
@@ -102,13 +105,13 @@ public class OrganController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 	}
 	@PutMapping("/")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody OrganDto organDto){
+	public ResponseEntity<Map<String, Object>> update(@Valid@RequestBody OrganDto organDto)throws KeyException{
 		
 		Map<String, Object> response = new HashMap<>();
 		OrganDto updateOrgan = organservice.findByCuitOrganization(organDto.getCuitOrganization());
 		if(updateOrgan == null) {
 			response.put("mensaje", "No se pudo actualizar la informacion de la empresa.");
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		if(updateOrgan.getKey_organization().equals(organDto.getKey_organization())) {
 		 updateOrgan = organservice.update(organDto);
@@ -117,28 +120,32 @@ public class OrganController {
 		
 		
 		
-		}response.put("mensaje", "Los datos ingresados no son correctos.");
-		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+		}throw new KeyException();
+		//response.put("mensaje", "Los datos ingresados no son correctos.");
+		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping(value="/delete")
 	public ResponseEntity<Map<String, Object>>deleteOrgan(@Valid @RequestBody Organization organ)throws Exception{
 		
 		Map<String,Object> response= new HashMap<>();
-		if(organ.getId() != null&&organ.getKey_organization()!=null) {
+		
 		Organization deleteorgan = organservice.findById(organ.getId());
-		//log.info("person1: "+ deleteperson.toString());
+		if(deleteorgan!=null) {
 		if(deleteorgan.getKey_organization().equals(organ.getKey_organization())) {
 		
 		 organservice.deleteOrgan(deleteorgan);
 	 response.put("Mensaje", "La empresa fue eliminada existosamente");
 	 return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);}
-		 response.put("Mensaje", "La contraseña ingresada no es correcta");
-		 return new ResponseEntity<Map<String,Object>>(response, HttpStatus.UNAUTHORIZED);
+		throw new KeyException();
+		 //response.put("Mensaje", "La contraseña ingresada no es correcta");
+		 //return new ResponseEntity<Map<String,Object>>(response, HttpStatus.UNAUTHORIZED);
 		
-	 } response.put("Mensaje", "La empresa no pudo ser eliminada verifique los datos ingresados");
+	 } throw new NotFoundException();
+		
+		//response.put("Mensaje", "La empresa no pudo ser eliminada verifique los datos ingresados");
 	 
-		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 	
 				
 	}

@@ -48,9 +48,10 @@ public class EventServiceImp implements IEventService {
 			eventPersist.setUbications(eventexist.getUbications());
 			eventPersist.setDateEvent(eventexist.getDateEvent());
 			eventPersist.setActivity(eventexist.getActivity());
+			//verifico la fecha no sea anterior
 			if(eventexist.getCreateDate().isAfter(eventDto.getDateEvent())) { eventPersist.setActivity(false);}
 			List<Event> eventExist= eventRepository.findByNameEvent(eventPersist.getNameEvent());
-			
+			//verifica no haya dos nombres iguales
 			if(eventExist.isEmpty()==false) {
 				for(Event e:eventExist) {
 				e.setActivity(false);
@@ -59,7 +60,7 @@ public class EventServiceImp implements IEventService {
 			eventexist=eventRepository.save(eventPersist);
 			eventDto= EventWrapper.entityToDto(eventRepository.save(eventexist));
 			return eventDto;
-			} return null;
+			} return eventDto;
 		}
 		/*Organization organ=organRepository.findByCuitOrganization(eventDto.getOrganization().getCuitOrganization());
 		Event event= EventWrapper.dtoToEntity(eventDto);
@@ -69,11 +70,12 @@ public class EventServiceImp implements IEventService {
 		return eventDto;
 		}
 		return eventDto;*/
+		return null;
 	}
 
 	@Override
 	public void delete(Event event) {
-		// TODO Auto-generated method stub
+		// borrado logico
 		event.setActivity(false);
 		eventRepository.save(event);
 		

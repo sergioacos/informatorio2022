@@ -20,18 +20,23 @@ public class Floor implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(unique=true)
+	@Column
    private Integer floor;
 	
-   @OneToMany(mappedBy="floor",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-   	private List <Address> addresses;
+	public Floor(Integer floor) {
+		super();
+		this.floor = floor;
+	}
+	
+  /* @OneToMany(mappedBy="floor",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
+   	private List <Address> addresses;*/
 
 
-public Floor(Integer floor, List<Address> addresses) {
+/*public Floor(Integer floor, List<Address> addresses) {
 	super();
 	this.floor = floor;
 	this.addresses = addresses;
-}
+}*/
    
    
 }

@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -9,21 +10,21 @@ import javax.validation.constraints.Size;
 
 
 public class PersonDto {
-	@NotNull
-	@NotEmpty
+
+	@NotBlank
 	@Size(max=30, min=4, message="Debe ingresar un nombre entre 4 y 30 caracteres")
 	 private String Name;
-	@NotNull
-	@NotEmpty
+	
+	@NotBlank
 	@Size(max=30, min=4, message="Debe ingresar un nombre entre 4 y 30 caracteres")
 	 private String lastname;
-	@NotNull
 	
+	@NotNull
 	@Positive(message="Ingrese un número de dni válido")
 	 private Integer dni;
 	
-	@NotNull
-	@NotEmpty
+	
+	@NotBlank
 	 @Size(max=30, min=8, message="Debe ingresar un clave entre 8 y 30 caracteres")
 	 private String  key_person;
 
