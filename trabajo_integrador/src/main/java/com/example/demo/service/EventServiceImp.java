@@ -48,16 +48,27 @@ public class EventServiceImp implements IEventService {
 			eventPersist.setUbications(eventexist.getUbications());
 			eventPersist.setDateEvent(eventexist.getDateEvent());
 			eventPersist.setActivity(eventexist.getActivity());
-			if(eventexist.getCreateDate().isAfter(eventDto.getDateEvent())) { eventPersist.setActivity(false);
+			if(eventexist.getCreateDate().isAfter(eventDto.getDateEvent())) { eventPersist.setActivity(false);}
+			List<Event> eventExist= eventRepository.findByNameEvent(eventPersist.getNameEvent());
+			
+			if(eventExist.isEmpty()==false) {
+				for(Event e:eventExist) {
+				e.setActivity(false);
+				eventRepository.save(e);
+			}
+			eventexist=eventRepository.save(eventPersist);
+			eventDto= EventWrapper.entityToDto(eventRepository.save(eventexist));
+			return eventDto;
+			} return null;
 		}
-		Organization organ=organRepository.findByCuitOrganization(eventDto.getOrganization().getCuitOrganization());
+		/*Organization organ=organRepository.findByCuitOrganization(eventDto.getOrganization().getCuitOrganization());
 		Event event= EventWrapper.dtoToEntity(eventDto);
 		if(event.getCreateDate().isBefore(event.getDateEvent())) { event.setActivity(true);
 		eventDto.setOrganization(organ);
 		eventDto= EventWrapper.entityToDto(eventRepository.save(event));
 		return eventDto;
 		}
-		return eventDto;
+		return eventDto;*/
 	}
 
 	@Override
@@ -76,6 +87,18 @@ public class EventServiceImp implements IEventService {
 
 	@Override
 	public Event findByCreateDate(LocalDateTime createDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Event> findByNameEvent(String nameEvent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Event findByNameEventAndActivityTrue(String nameEvent) {
 		// TODO Auto-generated method stub
 		return null;
 	}

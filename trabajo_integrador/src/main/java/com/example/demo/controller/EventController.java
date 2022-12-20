@@ -47,7 +47,7 @@ public class EventController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
-	// Rever!!!
+	
 	@PutMapping("/")
 	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody EventDto eventDto) {
 		log.info("event: " + eventDto.toString());
@@ -75,10 +75,10 @@ public class EventController {
 		Map<String, Object> response = new HashMap<>();
 		Organization organ = eventDto.getOrganization();
 
-		if (eventDto == null) {
+		/*if (eventDto == null) {
 			response.put("mensaje", "No se pudo actualizar la informacion del evento.");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}
+		}*/
 		if (organ.getKey_organization().equals(eventDto.getKeyEvent())) {
 			Event event = EventWrapper.dtoToEntity(eventDto);
 			/* Event updateEvent = */ eventService.delete(event);
