@@ -7,8 +7,8 @@ import com.example.demo.entity.Address;
 import com.example.demo.entity.Event;
 @Repository
 
-public interface IAddressRepository extends JpaRepository<Event,Long>{
+public interface IAddressRepository extends JpaRepository<Address,Long>{
 
-	void save(Address address);
+	public Address save(Address address);
 
 }

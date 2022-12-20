@@ -48,7 +48,7 @@ public class EventDto {
 
    private Boolean activity;
    
-   @NotNull
+  // @NotNull
 	@NotEmpty
 	@Size(max=40,min=20, message="Debe ingresar una contraseseña correcta ")
    private String keyEvent;

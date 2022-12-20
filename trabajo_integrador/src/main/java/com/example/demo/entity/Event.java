@@ -36,7 +36,7 @@ public class Event implements Serializable {
 	 private Long id;
 	 
 	 @Column(name="name_event",length=30)
-	 private String NameEvent;
+	 private String nameEvent;
 
 	 
 	 @Column(name="es_recurrente")
@@ -44,7 +44,7 @@ public class Event implements Serializable {
 	 
 	 
 	 @OneToMany(mappedBy="event",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	 @Column(name="ubication_event")
+	 //@Column(name="ubication_event")
 	 private List<Address> ubications;
 	 
 	 @Column(name="activity")
@@ -76,7 +76,7 @@ public class Event implements Serializable {
 			List<Turn> turns) {
 		super();
 		this.id = id;
-		NameEvent = nameEvent;
+		this.nameEvent = nameEvent;
 		esRecurrente = type;
 		this.ubications = ubications;
 		this.activity = activity;

@@ -76,7 +76,7 @@ public class OrganController {
 	
 	public ResponseEntity<HashMap<String, Object>>all(){
 		HashMap<String,Object> response = new HashMap<>();
-		List<Organization> organizations = organservice.getAll();//new ArrayList<>();
+		List<OrganDto> organizations = organservice.getAll();//new ArrayList<>();
 		
 		//if(organizations.isEmpty()) {
 		// response.put("mensaje","No hay organizaciones cargadas");
@@ -111,8 +111,8 @@ public class OrganController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		if(updateOrgan.getKey_organization().equals(organDto.getKey_organization())) {
-		 updateOrgan = organservice.save(organDto);
-		 response.put("person", updateOrgan+"ha sido actualizada");
+		 updateOrgan = organservice.update(organDto);
+		 response.put("organization", updateOrgan+"ha sido actualizada");
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		
 		

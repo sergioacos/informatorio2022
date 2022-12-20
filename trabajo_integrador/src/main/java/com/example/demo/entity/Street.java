@@ -30,7 +30,7 @@ public class Street implements Serializable{
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
-		@Column(unique=true)
+		//@Column(unique=true)
 	   private String name;
 	   
 	   @OneToMany(mappedBy="street",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)

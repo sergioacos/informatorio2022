@@ -8,7 +8,11 @@ import com.example.demo.entity.Organization;
 
 public interface IOrganService {
 	
- public List<Organization> getAll();
+ public List<OrganDto> getAll();
+ 
+ public List<OrganDto> findByActiveTrue();
+ 
+ public OrganDto update(OrganDto organizationDto);
  
  public OrganDto save(OrganDto organizationDto);
  

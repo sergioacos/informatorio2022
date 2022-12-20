@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +25,31 @@ public class EventServiceImp implements IEventService {
 		Event event= EventWrapper.dtoToEntity(eventDto);
 		event.setOrganization(organ);
 		event.setCreateDate(LocalDateTime.now());
-		/*if(event.getCreateDate().isBefore(event.getDateEvent())) { */event.setActivity(true);
+		event.setActivity(true);
+		List<Event> eventexist= eventRepository.findByNameEvent(event.getNameEvent());
 		
+		if(eventexist.isEmpty()==false) {
+			for(Event e:eventexist) {
+			e.setActivity(false);
+			eventRepository.save(e);
+		}
+		}
 		eventDto= EventWrapper.entityToDto(eventRepository.save(event));
 		return eventDto;
 	}
 
 	@Override
 	public EventDto update(EventDto eventDto) {
-		
+		Event eventexist= eventRepository.findByNameEventAndActivityTrue(eventDto.getNameEvent());
+		if (eventexist!=null) {
+			Event eventPersist= new Event();
+			eventPersist.setKeyEvent(eventexist.getKeyEvent());
+			eventPersist.setNameEvent(eventexist.getNameEvent());
+			eventPersist.setUbications(eventexist.getUbications());
+			eventPersist.setDateEvent(eventexist.getDateEvent());
+			eventPersist.setActivity(eventexist.getActivity());
+			if(eventexist.getCreateDate().isAfter(eventDto.getDateEvent())) { eventPersist.setActivity(false);
+		}
 		Organization organ=organRepository.findByCuitOrganization(eventDto.getOrganization().getCuitOrganization());
 		Event event= EventWrapper.dtoToEntity(eventDto);
 		if(event.getCreateDate().isBefore(event.getDateEvent())) { event.setActivity(true);

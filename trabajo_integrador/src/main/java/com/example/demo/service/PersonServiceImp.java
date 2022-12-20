@@ -6,11 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.OrganDto;
 import com.example.demo.dto.PersonDto;
 import com.example.demo.dto.TurnDto;
+import com.example.demo.entity.Organization;
 import com.example.demo.entity.Person;
 import com.example.demo.entity.Turn;
 import com.example.demo.repository.IPersonRepository;
+import com.example.demo.wrapper.OrganWrapper;
 import com.example.demo.wrapper.PersonWrapper;
 import com.example.demo.wrapper.TurnWrapper;
 
@@ -51,6 +54,24 @@ public class PersonServiceImp implements IPersonService {
 		person =personRepository.save(person);
 		return person;
 	}
+	public PersonDto update(PersonDto personDto) {
+		Person personexist= personRepository.findByDni(personDto.getDni());
+		if (personexist!=null) {
+			Person personPersist= new Person();
+			personPersist.setDni(personexist.getDni());
+			personPersist.setName(personexist.getName());
+			personPersist.setLastname(personexist.getLastname());
+			personPersist.setKey_person(personexist.getKey_person());
+			
+			personexist=personRepository.save(personPersist);
+			personDto= PersonWrapper.entityToDto(personexist);
+			
+			return personDto;
+		}
+		return null;
+	}
+	
+	
 	@Override
 	public  void deletePerson(Person persondelete ) {
 		//Person persondelete = personRepository.findById(id).orElse(null);

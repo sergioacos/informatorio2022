@@ -30,7 +30,7 @@ public class NumberStreet implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(unique=true)
+	//@Column(unique=true)
    private Integer number;
    
    @OneToMany(mappedBy="number",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)

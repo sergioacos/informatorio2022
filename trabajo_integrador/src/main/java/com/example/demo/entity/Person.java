@@ -48,12 +48,12 @@ public class Person implements Serializable {
 	 @Column(name="active")
 	 private Boolean activity;
 	 
-	 @Column(name="ubication")
-	 private Address Ubication;
+	// @Column(name="ubication")
+	 //private Address Ubication;
 	 
-	 @Column(name="name_organization")
+	// @Column(name="name_organization")
 	 
-	 private String nameOrganization;
+	// private String nameOrganization;
 	 
 	 @Column(name="release_date")
 	 private Date ReleaseDate;
@@ -68,19 +68,7 @@ public class Person implements Serializable {
 
 	
 
-	public Person(String name, String lastname, Integer dni, Address ubication,
-			String emailOrganization, Date releaseDate, String key_person, Turn turn) {
-		super();
-		Name = name;
-		this.lastname = lastname;
-		this.dni = dni;
-		this.activity = true;
-		Ubication = ubication;
-		nameOrganization = emailOrganization;
-		ReleaseDate = releaseDate;
-		this.key_person = key_person;
-		this.turn = turn;
-	}
+	
 	public Person(String name, String lastname, Integer dni, Boolean activity, Address ubication,
 			String emailOrganization, Date releaseDate, String key_person, Turn turn) {
 		super();
@@ -88,8 +76,8 @@ public class Person implements Serializable {
 		this.lastname = lastname;
 		this.dni = dni;
 		this.activity = activity;
-		Ubication = ubication;
-		nameOrganization = emailOrganization;
+		//Ubication = ubication;
+		//nameOrganization = emailOrganization;
 		ReleaseDate = releaseDate;
 		this.key_person = key_person;
 		this.turn = turn;

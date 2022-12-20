@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.NumberStreet;
 @Repository
-public interface INumberRepository extends JpaRepository {
+public interface INumberRepository extends JpaRepository<NumberStreet, Long> {
 	public NumberStreet findByNumber (Integer number);
 
 }

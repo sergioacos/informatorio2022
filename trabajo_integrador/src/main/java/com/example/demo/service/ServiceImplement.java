@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -36,9 +37,14 @@ public class ServiceImplement implements IOrganService{
  
 @Transactional
 @Override
-public List<Organization> getAll() {
-	// TODO Auto-generated method stub
-	return organRepository.findByActiveTrue();
+public List<OrganDto> getAll() {
+	List<Organization>organizations=organRepository.findByActiveTrue();
+	List<OrganDto>listaDto= new ArrayList();
+	for (Organization e:organizations) {
+		OrganDto organ= OrganWrapper.entityToDto(e);
+		listaDto.add(organ);
+	}
+	return listaDto;
 }
 
 @Override
@@ -80,6 +86,32 @@ public void deleteOrgan(Organization deleteorgan) {
 	// TODO Auto-generated method stub
 	deleteorgan.setActive(false);
 	organRepository.save(deleteorgan);
+}
+
+@Override
+public List<OrganDto> findByActiveTrue() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public OrganDto update(OrganDto organizationDto) {
+	Organization organexist= organRepository.findByCuitOrganization(organizationDto.getCuitOrganization());
+	if (organexist!=null) {
+		Organization organPersist= new Organization();
+		organPersist.setCuitOrganization(organexist.getCuitOrganization());
+		organPersist.setAddressOrganization(organexist.getAddressOrganization());
+		organPersist.setNameOrganization(organexist.getNameOrganization());
+		organPersist.setKey_organization(organexist.getKey_organization());
+		organPersist.setTelephoneNumber(organexist.getTelephoneNumber());
+		organPersist.setEmailOrganization(organexist.getEmailOrganization());
+		
+		organexist=organRepository.save(organPersist);
+		organizationDto= OrganWrapper.entityToDto(organexist);
+		
+		return organizationDto;
+	}
+	return null;
 }
 
 
