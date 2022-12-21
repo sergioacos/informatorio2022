@@ -44,7 +44,7 @@ public class Event implements Serializable {
 	 
 	 
 	 @OneToMany(mappedBy="event",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-	 //@Column(name="ubication_event")
+	 
 	 private List<Address> ubications;
 	 
 	 @Column(name="activity")

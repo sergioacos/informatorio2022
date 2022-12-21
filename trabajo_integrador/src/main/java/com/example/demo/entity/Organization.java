@@ -48,7 +48,7 @@ public class Organization implements Serializable {
 
 	@Column(name = "cuit_organization",unique=true)
 	
-	private BigInteger cuitOrganization;
+	private Long cuitOrganization;
 
 	@Column(name = "telephone_number")
 	private Integer TelephoneNumber;
@@ -77,7 +77,7 @@ public class Organization implements Serializable {
 	@OneToMany(mappedBy = "organization",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
 	private List<Turn> turns;
 
-	public Organization(String nameOrganization, BigInteger cuitOrganization, Integer telephoneNumber,
+	public Organization(String nameOrganization, Long cuitOrganization, Integer telephoneNumber,
 			Address addressOrganization, String emailOrganization, LocalDateTime releaseDate, String key_organization,
 			List<Event> events) {
 		super();

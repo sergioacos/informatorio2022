@@ -11,9 +11,11 @@ import com.example.demo.entity.Organization;
 @Repository
 public interface IOrganRepository extends JpaRepository<Organization,Long> {
 	
+	public Organization findByNameOrganizationAndActiveTrue(String nameOrganization);
+	
 	public Organization findByNameOrganization(String nameOrganization);
 	
-	public Organization findByCuitOrganization(BigInteger cuitOrganization);
+	public Organization findByCuitOrganization(Long cuitOrganization);
 	
 	public List<Organization> findByActiveTrue();
 

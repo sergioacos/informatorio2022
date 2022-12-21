@@ -1,18 +1,13 @@
 package com.example.demo.dto;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.example.demo.entity.Address;
@@ -34,8 +29,7 @@ import lombok.ToString;
 public class OrganDto {
 	@NotNull
 	@NotEmpty
-	//@Min(value=4)
-	//@Max(value=30)
+	
 	@NotBlank(message="El campo no debe estar en vacio")
 	@Size(max=30, min=3, message="Debe ingresar un nombre entre 3 y 30 caracteres")
 	 private String nameOrganization;
@@ -43,7 +37,7 @@ public class OrganDto {
 	
 	@Min(value=999999999)
 	
-	 private BigInteger CuitOrganization;
+	 private Long CuitOrganization;
 	
 	private Integer TelephoneNumber;
 	

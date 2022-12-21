@@ -64,7 +64,7 @@ public class PersonController {
 	public ResponseEntity<HashMap<String, Object>> lastname(@PathVariable(value = "lastname") String lastname) {
 		HashMap<String, Object> response = new HashMap<>();
 		List<PersonDto> persons = personService.findByLastname(lastname);
-		// log.info("organization"+ cuit.toString());
+	
 
 		if (persons.isEmpty() == false) {
 
@@ -93,10 +93,7 @@ public class PersonController {
 		PersonDto updatePerson = personService.findByDni(personDto.getDni());
 		if (updatePerson == null) {
 			throw new NotFoundException();
-			// response.put("mensaje", "No se pudo actualizar la informacion de la
-			// persona.");
-			// return new ResponseEntity<Map<String, Object>>(response,
-			// HttpStatus.NOT_FOUND);
+			
 		}
 		if (updatePerson.getKey_person().equals(personDto.getKey_person())) {
 			updatePerson = personService.save(personDto);
@@ -104,8 +101,7 @@ public class PersonController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
 		}throw new KeyException();
-		//response.put("mensaje", "Los datos ingresados no son correctos.");
-		//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		
 	}
 
 	@DeleteMapping(value = "/delete")
@@ -121,17 +117,9 @@ public class PersonController {
 				response.put("Mensaje", "La persona fue eliminada existosamente");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 			}  throw new KeyException();
-			//response.put("Mensaje", "La contraseña ingresada no es correcta");
-			//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.UNAUTHORIZED);
-
+			
 		}throw new NotFoundException();
-		//response.put("Mensaje", "La persona no pudo ser eliminada verifique los datos ingresados");
-
-		//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-
-//public void deletePerson(@PathVariable (value="id") Long id) {
-
-		// personService.deletePerson(id);
+	
 		
 	}
 }

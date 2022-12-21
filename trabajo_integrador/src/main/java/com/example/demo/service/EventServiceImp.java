@@ -62,14 +62,7 @@ public class EventServiceImp implements IEventService {
 			return eventDto;
 			} return eventDto;
 		}
-		/*Organization organ=organRepository.findByCuitOrganization(eventDto.getOrganization().getCuitOrganization());
-		Event event= EventWrapper.dtoToEntity(eventDto);
-		if(event.getCreateDate().isBefore(event.getDateEvent())) { event.setActivity(true);
-		eventDto.setOrganization(organ);
-		eventDto= EventWrapper.entityToDto(eventRepository.save(event));
-		return eventDto;
-		}
-		return eventDto;*/
+		
 		return null;
 	}
 

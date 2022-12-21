@@ -61,8 +61,7 @@ public class EventController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
 		}throw new KeyException();
-		//response.put("mensaje", "Los datos ingresados no son correctos.");
-		//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		
 	}
 
 	
@@ -79,11 +78,7 @@ public class EventController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
 		}throw new KeyException();
-		//response.put("mensaje", "Los datos ingresados no son correctos.");
-		//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-	
-		//response.put("mensaje", "No se pudo actualizar la informacion del evento.");
-	//return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		
 }
 
 }

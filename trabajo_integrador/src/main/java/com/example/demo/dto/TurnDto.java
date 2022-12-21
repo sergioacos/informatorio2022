@@ -24,16 +24,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TurnDto {
-	//@NotNull
-	//@NotEmpty
+	
 	private String key;
 	@NotNull
 	private Boolean activity;
 	@NotNull
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createDate;
-	//@NotNull
-	//@NotEmpty
+	
 	 private Person  person;
 	@NotNull
 	 private Event events;

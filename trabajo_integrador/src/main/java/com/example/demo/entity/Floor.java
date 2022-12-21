@@ -28,15 +28,6 @@ public class Floor implements Serializable{
 		this.floor = floor;
 	}
 	
-  /* @OneToMany(mappedBy="floor",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-   	private List <Address> addresses;*/
-
-
-/*public Floor(Integer floor, List<Address> addresses) {
-	super();
-	this.floor = floor;
-	this.addresses = addresses;
-}*/
-   
+ 
    
 }

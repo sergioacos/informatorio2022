@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import com.example.demo.dto.OrganDto;
@@ -16,9 +15,9 @@ public interface IOrganService {
  
  public OrganDto save(OrganDto organizationDto);
  
- public Organization findByNameOrganization(String nameOrganization);
+ public OrganDto findByNameOrganizationAndActiveTrue(String nameOrganization);
  
- public OrganDto findByCuitOrganization(BigInteger cuitOrganization);
+ public OrganDto findByCuitOrganization(Long cuitOrganization);
  
  public Organization findById(Long id);
 

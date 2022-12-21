@@ -1,14 +1,10 @@
 package com.example.demo.controller;
 
-import java.security.KeyException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.EventDto;
 import com.example.demo.dto.TurnDto;
 import com.example.demo.entity.Event;
 import com.example.demo.entity.Organization;
-import com.example.demo.entity.Turn;
-import com.example.demo.repository.IEventRepository;
-import com.example.demo.repository.ITurnRepository;
 import com.example.demo.service.IEventService;
 import com.example.demo.service.IOrganService;
 import com.example.demo.service.ITurnService;
@@ -50,7 +42,7 @@ public class TurnController {
 	@PostMapping("/")
 	public ResponseEntity<Map<String, Object>> createTurn(@Valid @RequestBody TurnDto turnDto) throws Exception {
 		Map<String, Object> response = new HashMap<>();
-		// Event event =turnService turnDto.getEvents().getId();
+		
 		log.info("imprimo" + turnDto.toString());
 		Event event = eventService.findById(turnDto.getEvents().getId());
 		Organization orga = organservice.findById(turnDto.getOrganization().getId());
@@ -87,8 +79,7 @@ public class TurnController {
 			response.put("turns", turns);
 			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
 		}throw new NotFoundException();
-		//response.put("message", "La organizacion no fue encontrada");
-		//return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.NOT_FOUND);
+		
 
 	}
 
@@ -111,18 +102,5 @@ public class TurnController {
 		return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.NOT_FOUND);
 
 	}
-	/*
-	 * @GetMapping("/all") public ResponseEntity<HashMap<String, Object>>all(){
-	 * HashMap<String,Object> response = new HashMap<>(); List<TurnDto> turns =
-	 * turnService.getAll(); response.put("turns",turns); return new
-	 * ResponseEntity<HashMap<String,Object>>(response,HttpStatus.OK); }
-	 * 
-	 * @GetMapping("/active") public ResponseEntity<HashMap<String,
-	 * Object>>active(){ HashMap<String,Object> response = new HashMap<>();
-	 * Organization Organ= organservice. List<TurnDto> turns =
-	 * turnService.getActive(); if(turns!=null) { response.put("turns",turns);
-	 * return new ResponseEntity<HashMap<String,Object>>(response,HttpStatus.OK); }
-	 * response.put("mensaje", "No existen  turnos activos"); return new
-	 * ResponseEntity<HashMap<String,Object>>(response,HttpStatus.NOT_FOUND); }
-	 */
+	
 }

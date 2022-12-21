@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import java.math.BigInteger;
 import java.security.KeyException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.OrganDto;
-import com.example.demo.dto.PersonDto;
-import com.example.demo.entity.Address;
-import com.example.demo.entity.Departament;
-import com.example.demo.entity.Floor;
-import com.example.demo.entity.NumberStreet;
 import com.example.demo.entity.Organization;
-import com.example.demo.entity.Person;
 import com.example.demo.service.IOrganService;
 
 @RestController
@@ -44,34 +35,22 @@ public class OrganController {
 	@Autowired
 	private IOrganService organservice;
 	
-	/*@GetMapping(value="/{organization}")
-	public ResponseEntity<HashMap<String, Object>> id(@PathVariable(value = "organization")Long id){
-		HashMap<String,Object> response= new HashMap<>();
-		/*Organization organization= new Organization().;
-		
-		if(organization.==id) {
-			
-			response.put("organization", organization);
-			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
-		}
-	}*/
+	
 		
 	@GetMapping(value="/cuit/{cuit}")
-	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")BigInteger cuit)throws NotFoundException{
+	public ResponseEntity<HashMap<String, Object>> cuit(@PathVariable(value = "cuit")Long cuit)throws NotFoundException{
 		HashMap<String,Object> response= new HashMap<>();
-		Organization organization= new Organization();
+		OrganDto organization= organservice.findByCuitOrganization(cuit);
 		log.info("organization"+ cuit.toString());
 		
-		if(organservice.findByCuitOrganization(cuit)!= null) {
+		if(organization!= null) {
 			
 			response.put("organization", organization);
 			
 			return new ResponseEntity<HashMap<String, Object>>(response, HttpStatus.OK);
 		}else {
 			throw new NotFoundException();
-			//return new ResponseEntity<HashMap<String,Object>>(response, HttpStatus.NOT_FOUND);
+			
 		}
 	}
 		
@@ -79,7 +58,7 @@ public class OrganController {
 	
 	public ResponseEntity<HashMap<String, Object>>all(){
 		HashMap<String,Object> response = new HashMap<>();
-		List<OrganDto> organizations = organservice.getAll();//new ArrayList<>();
+		List<OrganDto> organizations = organservice.getAll();
 		
 		if(organizations.isEmpty()) {
 		 response.put("mensaje","No hay organizaciones cargadas");
@@ -117,12 +96,10 @@ public class OrganController {
 		 updateOrgan = organservice.update(organDto);
 		 response.put("organization", updateOrgan+"ha sido actualizada");
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-		
-		
+	
 		
 		}throw new KeyException();
-		//response.put("mensaje", "Los datos ingresados no son correctos.");
-		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+		
 	}
 	
 	@DeleteMapping(value="/delete")
@@ -136,16 +113,12 @@ public class OrganController {
 		
 		 organservice.deleteOrgan(deleteorgan);
 	 response.put("Mensaje", "La empresa fue eliminada existosamente");
-	 return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);}
-		throw new KeyException();
-		 //response.put("Mensaje", "La contraseña ingresada no es correcta");
-		 //return new ResponseEntity<Map<String,Object>>(response, HttpStatus.UNAUTHORIZED);
-		
+	 return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+	 }throw new KeyException();
+		 
 	 } throw new NotFoundException();
 		
-		//response.put("Mensaje", "La empresa no pudo ser eliminada verifique los datos ingresados");
-	 
-		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+		
 	
 				
 	}

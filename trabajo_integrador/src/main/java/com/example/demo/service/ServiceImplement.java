@@ -1,16 +1,11 @@
 package com.example.demo.service;
 
-import java.math.BigInteger;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +21,6 @@ public class ServiceImplement implements IOrganService{
 	
 	
 	
-	//public Organization findByNameOrganization(String NameOrganization) {
-		//return 
-	//}
  @Autowired
  private IOrganRepository organRepository;
  
@@ -61,13 +53,15 @@ public OrganDto save(OrganDto organizationDto) {
 }
 
 @Override
-public Organization findByNameOrganization(String nameOrganization) {
-	// TODO Auto-generated method stub
-	return null;
+public OrganDto findByNameOrganizationAndActiveTrue(String nameOrganization) {
+	Organization organ= organRepository.findByNameOrganizationAndActiveTrue(nameOrganization);
+	OrganDto organDTo= OrganWrapper.entityToDto(organ);
+	return organDTo;
+	
 }
 
 @Override
-public OrganDto findByCuitOrganization(BigInteger cuitOrganization) {
+public OrganDto findByCuitOrganization(Long cuitOrganization) {
 	// TODO Auto-generated method stub
 	Organization organ= organRepository.findByCuitOrganization(cuitOrganization);
 	OrganDto organDTo= OrganWrapper.entityToDto(organ);

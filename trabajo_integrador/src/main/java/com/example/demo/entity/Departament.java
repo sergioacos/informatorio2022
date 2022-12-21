@@ -39,16 +39,6 @@ public Departament(String departament) {
 	this.departament = departament;
 }
    
-  /* @OneToMany(mappedBy="departament",cascade=CascadeType.PERSIST,fetch= FetchType.LAZY)
-   
-   //@JoinTable(name="adress_id")
-   private List<Address> addresses;*/
-
-
-/*public Departament(String departament, List <Address> addresses) {
-	super();
-	this.departament = departament;
-	this.addresses = addresses;
-}*/
+  
    
 }

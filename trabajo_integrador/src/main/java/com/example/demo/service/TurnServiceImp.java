@@ -115,11 +115,5 @@ public class TurnServiceImp implements ITurnService{
 		
 	}
 
-	//@Override
-	//public Turn findById(Long id) {
-	//	Turn turn=eventRepository.findById(id).orElse(null);
-	//	return null;
-	//}
-
 	
 }
